@@ -1,14 +1,16 @@
 \documentclass[a4paper,10pt]{book}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[top=1in, left=1.25in, right=1.25in, bottom=1in]{geometry}
 
 %Includes "References" in the table of contents
 \usepackage[nottoc]{tocbibind}
 
 \usepackage{fancyhdr}
-\fancypagestyle{plain}{
+\fancypagestyle{}{
 \fancyfoot[C]{\thepage}}
-\pagestyle{plain}
+\pagestyle{empty}
+\renewcommand{\headrulewidth}{0pt}
 
 %Title, date an author of the document
 \title{Bibliography management: BibTeX}
