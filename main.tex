@@ -1,0 +1,50 @@
+\documentclass[a4paper,10pt]{book}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+\fancyfoot[C]{\thepage}}
+\pagestyle{plain}
+
+%Title, date an author of the document
+\title{Bibliography management: BibTeX}
+\author{Share\LaTeX}
+
+%Begining of the document
+\begin{document}
+%\pagenumbering{roman}
+\frontmatter
+\maketitle
+\newpage
+%\chapter*{}
+\begin{flushright}%
+  \emph{Dedica ...}
+  \thispagestyle{empty}
+\end{flushright}
+
+%\newpage
+
+\tableofcontents
+%\newpage
+\listoffigures
+
+\medskip
+%\pagenumbering{arabic}
+\mainmatter
+
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+
+\medskip
+
+%Sets the bibliography style to UNSRT and imports the 
+%bibliography file "samples.bib".
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
