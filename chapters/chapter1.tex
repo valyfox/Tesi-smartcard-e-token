@@ -15,14 +15,88 @@ Ci sono due criteri che permettono di classificare le smart card. Basandoci sull
 
 Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre le card a microprocessore possono effettuare elaborazioni. Infine le smarcard a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni. Mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
 
-Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (SO 14443 e ISO 15693).
+Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (ISO 14443 e ISO 15693).
 
 Le smart card a microprocessore sono particolarmente utilizzate per conservare in maniera sicura una chiave privata. Grazie alla loro capacità di elaborazione sono in grado di ricevere una piccola quantità di dati (come ad esempio un hash di un documento) e restituirlo crittografato con la chiave privata contenuta al loro intero. In questo modo la chiave non "esce" mai dal microprocessore, e quindi non può essere letta in alcun modo. Grazie a questa caratteristica le smart card costituiscono un elemento sicuro per la firma digitale di documenti.
 \cite{wiki_sc}
 
+\section{Le smart card nella firma digitale}
+Come accennato nel paragrafo precedente, uno degli utilizzi delle smartcard più frequente è quello nell'ambito della firma digitale.
 
+La firma digitale è un insieme di metodi crittografici che servono a garantire l'autenticità di un messaggio trasmesso su canali non sicuri. Offrendo al destinatario tre garanzie:
+\begin{itemize}
+    \item L'autenticazione del mittente.
+    \item La non negazione di invio del messaggio da parte dell'utente.
+    \item L'integrità del messaggio inviato.
+\end{itemize}
 
+La firma digitale si basa su un sistema di cifratura asimmetrica (ovvero che utilizza due chiavi, una pubblica e una privata). La chiave privata è utilizzata per "firmare" il file, mentre quella pubblica, disponibile a chiunque, per la verifica della validità della firma.
 
+Il classico funzionamento di una firma digitale consiste in pochi semplici step.
+\begin{enumerate}
+    \item Tramite una funzione di hash viene generata una stringa identificativa univoca al file. File uguali generano la stessa stringa (se viene usata la stessa funzione di hash) ed ogni stringa identifica univocamente un file.
+    \item La stringa generata con la funzione di hash viene crittografata usando la chiave privata. Una volta cifrata, la firma viene allegata al documento, che risulta firmato.
+    \item Per verificare l'autenticità della firma e l'integrità del documento il ricevente può calcolare nuovamente la funzione di hash del file e decifrare la firma allegata usando la chiave pubblica del mittente. Se il documento non è stato alterato e la chiave pubblica usata per decifrare la firma corrisponde alla chiave privata usata dal mittente, allora la stringa di hash calcolata corrisponderà alla stringa decifrata. Ciò garantisce i tre parametri riportati sopra.
+\end{enumerate}
+
+La chiave pubblica è solitamente fornita da una Certification Autority (CA) che garantisce che si tratti effettivamente della chiave pubblica del mittente del messaggio.
+
+Il ruolo che la smart card gioca nella firma digitale consiste nel conservare la chiave privata in un luogo sicuro. Il codice è infatti salvato sulla memoria del chip presente sulla card, che poi viene reso inaccessibile dall'esterno. Una volta collegata la card a un calcolatore, tramite un apposito lettore, al momento della firma viene inviato alla card la stringa identificativa del file. La scheda provvederà poi a crittografare la stringa e a restituire il risultato dell'elaborazione al PC che provvederà infine ad allegare la vera e propria firma al documento.
+\cite{Wiki_fd}
+
+\section{La smart card nella telefonia mobile}
+Un altro utilizzo molto frequente delle smart card è quello nell'ambito della telefonia mobile.
+
+Viene detta SIM (dall'inglese Subscriber Identity Module) una smart card che viene inserita in un telefono cellulare e utilizzata dagli operatori telefonici per conservare in modo sicuro il codice identificativo dei loro clienti (l'IMSI che corrisponde alla sigla inglese International Mobile Subscriber Identity).
+
+Le caratteristiche tipiche di una smart card SIM sono riassunte nella tabella \ref{parametri_SIM}.
+
+\begin{table}
+\centering
+\begin{tabular}{ |c|c| } 
+ \hline
+ Descrizione &  64K JavaCard 2.1.1 WIB1.3 USIM \\
+ \hline
+ Piattaforma & Atmel AT90SC25672RU \\ 
+ \hline
+ Architettura CPU & 8-bit AVR \\ 
+ \hline
+ Tecnologia & 0.15uM CMOS \\ 
+ \hline
+ ROM & 256KB \\
+ \hline
+ Memoria non volatile & 72 KB EEPROM \\
+ \hline
+ RAM & 6Kb \\
+ \hline
+ Frequenza operativa interna & 20-30 MHz \\
+ \hline
+ Tempo di vita & 500mila cicli di letture/scrittura \\
+ \hline
+ 
+\end{tabular}
+\caption{Tabella dei parametri tipici di una smart card SIM \cite{secret_life}.}
+\label{parametri_SIM}
+\end{table}
+
+L'utilizzo che viene fatto delle sim dagli operatori è quello di fornire vari servizi ai loro clienti e controllarne l'utilizzo.
+
+La carta SIM non contiene in memoria il numero telefonico associato all'utente, ma solo il codice identificativo IMSI ed è compito dell'operatore associarlo ad un numero telefonico, grazie a ciò è possibile avere più SIM associate allo stesso numero o portare il proprio numero da un operatore a un altro.
+
+La SIM è protetta da un codice PIN composto solitamente da 4 o 8 cifre, l'utente ha la facoltà di disabilitare la richiesta del codice ogni volta che la SIM viene alimentata oppure cambiare il codice fornito dall'operatore. Una volta che il codice PIN è stato sbagliato tre volte, la scheda si blocca e viene richiesto un codice di sblocco a 10 cifre, denominato PUK (PIN Unblocking Key) fornito dall'operatore. Se il codice PUK viene sbagliato 10 volte la scheda si blocca definitivamente e può essere sbloccata solo dall'operatore dopo aver provato di essere l'intestatario della SIM.
+
+Il funzionamento della SIM è molto semplice. Una volta che l'operatore riconosce il codice presente sulla carta come valido e presente nel proprio database il dispositivo mobile viene agganciato alla rete e resta in attesa che l'utente richieda un particolare servizio. Una volta effettuata la richiesta, l'operatore verifica se il servizio può essere erogato controllando ad esempio le offerte attive e il credito disponibile e può decidere se accettare o rifiutare la richiesta.
+\cite{Wiki_sim}
+
+\subsection{Altre funzionalità della SIM}
+La SIM card oltre a conservare il codice identificativo dell'utente offre allo stesso anche alcune funzionalità, come ad esempio il salvataggio di contatti telefonici, utile quando si cambia cellulare e non si vuole perdere la lista di contatti salvata in rubrica.
+
+Inoltre alcuni operatori offrono delle semplici applicazioni presenti all'interno delle loro SIM card, che presentano un'interfaccia molto semplice (a menù) con alcune funzioni che possono essere richieste dall'utente. Queste applicazioni possono anche aprire URL, mandare SMS, avviare chiamate e reagire a particolari eventi come l'arrivo di una chiamata o la disconnesione di una chiamate (per inviare, ad esempio, un SMS all'utente con il credito residuo o i minuti ancora disponibili nell'offerta). Inoltre c'è la possibilità di interagire con altre card, nel caso di telefoni dual SIM.
+
+Il modo più semplice per realizzare applicazioni che girano su smart card (più propriamente dette applet) è quello di utilizzare il liguaggio Java e le Java Cad, di cui si parlerà più nel dettaglio nel paragrafo \ref{java_card}.
+\cite{secret_life}
+
+    
     
 % \subsection{Sottosezione}
 %    \begin{equation}
