@@ -110,14 +110,12 @@ Inoltre alcuni operatori offrono delle semplici applicazioni presenti all'intern
 
 Nella figura \ref{fig:app_icon} è possibile vedere l'icona dell'applet fornito dall'operatore Fastweb, mentre nella figura \ref{fig:app_screen} è possibile vederne la schermata principale.
 
-
 \begin{figure}[h!]
   \centering
   \includegraphics[width=150pt]{pictures/screen_aplet_fastweb.jpg}
   \caption{Schermata dell'applet della SIM di Fastweb.}
   \label{fig:app_screen}
 \end{figure}
-
 
 Il modo più semplice per realizzare applicazioni che girano su smart card (più propriamente dette applet) è quello di utilizzare il liguaggio Java e le Java Cad, di cui si parlerà più nel dettaglio nel paragrafo \ref{java_card}.
 \cite{secret_life}
@@ -176,6 +174,68 @@ L'unico rischio a cui si può incorrere quando si ha una carta di credito consis
 
 %------------------------------
 \subsection{Le smart card nell'identificazione}
+A luglio 2016 è partita, in Italia, la sostituzione della carta d'identità cartacea con quella elettronica.
+
+Oltre a cambiare le dimensioni e il materiale dal quale è costituito, il documento è stato anche munito di un microprocessore a radio frequenza, rendendolo di fatto una smart card contactless.
+
+I dati contentuti all'interno del chip sono i seguenti:
+\begin{itemize}
+    \item Comune emettitore
+    \item Nome del titolare
+    \item Cognome del titolare
+    \item Luogo e data di nascita
+    \item Sesso
+    \item Statura
+    \item Cittadinanza
+    \item Immagine della firma del titolare
+    \item Validità per l’espatrio
+    \item Fotografia
+    \item Immagini di 2 impronte digitali (un dito della mano destra e un dito della mano sinistra)
+    \item Nome e cognome del padre e della madre (nel caso di un minore)
+    \item Codice fiscale
+    \item Estremi dell’atto di nascita
+    \item Indirizzo di residenza
+    \item Comune di iscrizione AIRE (per i cittadini residenti all’estero)
+    \item Codice fiscale sotto forma di codice a barre
+\end{itemize}
+
+L'accesso ai dati presenti sul microprocessore è effettuato attraverso la tecnologia NFC  (Near Field Communication), ciò permette alla carta di essere letta non solo da appositi lettori, ma anche dai più moderni smartphone dotati di lettori NFC.
+
+L'applicazione tramite la quale viene effettuata la verifica del documento è la stessa presente anche nei passaporti moderni, denominata "ICAO MRTD". L'applicazione contiene tutti i dati anagrafici dell'utente che sono firmati digitalmente dal Ministero dell’Interno prima che la carta venga prodotta presso l’Istituto Poligrafico e Zecca dello Stato.
+
+La sicurezza dei dati è garantita dal fatto che la loro lettura è consentita solo a chi può leggere le informazioni stampate fisicamente sulla carta. Questo perchè sulla card è presente una chiave di accesso richiesta per la lettura elettronica (nel CAN – Card Access Number o nell’ MRZ – Machine Readable Zone). Invece, per l'accesso ai dati più sensibili, come le impronte digitali sono richieste ulteriori autorizzazioni date a specifici organi come le forze di Polizia. Questo, insieme al fatto che la conversazione tra lettore e carta è cifrata, fa sì che le informazioni non possono essere lette all'insaputa dell'utente e blocca anche tentativi di intercettazione della comunicazione.
+\cite{cie}
+
+\subsubsection{Esempio di scansione di una carta d'identità}
+In questa breve sezione si mostrerà come venga utilizzata la tecnologia NFC per la lettura della smart card presente all'interno di una carta d'identità tramite l'applicazione \textit{IDEA - Identity Easy Access} disponibile gratuitamente sul Google Play store per tutti gli smartphone Android dotati di lettore NFC.
+
+Come primo passaggio, l'applicazione ha bisogno di leggere il codice di accesso presente sul retro della carta, ciò può essere fatto manualmente o mediante l'utilizzo della fotocamera. Questo processo è mostrato nella figura \ref{fig:leggi_codice}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=300pt]{pictures/foto_carta.png}
+  \caption{Lettura del codice di accesso tramite la fotocamera.}
+  \label{fig:leggi_codice}
+\end{figure}
+
+Una volta fatto ciò è possibile avvicinare la carta al lettore NFC per far avvenire la richiesta e la comunicazione dei dati. Come mostrato nella figura \ref{fig:leggi_carta}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=250pt]{pictures/lettura_carta.jpg}
+  \caption{Lettura della carta tramite NFC.}
+  \label{fig:leggi_carta}
+\end{figure}
+
+Una volta terminata l'operazione è possibile vedere i dati che possono essere letti elettronicamente. Come si vede nella figura \ref{fig:carta_letta}, i dati che possono essere letti sono: il numero del documento, il nome, il cognome, il sesso, la data di nascita, la scadenza del documento e la foto del titolare, è inoltre possibile anche verificare la validità del documento.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=300pt]{pictures/carta_letta.jpg}
+  \caption{I dati letti elettronicamende dalla carta.}
+  \label{fig:carta_letta}
+\end{figure}
+
 
 %-----------SECTION------------
 \section{Breve storia delle smart card}
