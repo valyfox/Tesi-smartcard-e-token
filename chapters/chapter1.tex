@@ -1,6 +1,7 @@
 \chapter{Introduzione}
 \label{chapter1}
 
+%-----------------SECTION-----------------
 \section{Cosa sono le smart card}
 Una smart card è un dispositivo hardware realizzato su un supporto di plastica in grado di elaborare e memorizzare dati, rispondendo anche ad elevati standard di sicurezza.
 
@@ -9,19 +10,24 @@ La prima idea di realizzare questo tipo di dispositivi è venuta nel 1968 a due 
 Gli utilizzi delle smart card sono molteplici, dal settore bancario, a quello della telefonia, dell'identità, fino ad arrivare nel mondo del trasporto, con l'utilizzo di biglietti elettronici.
 \cite{wiki_sc}
 
-\section{Caratteristiche  delle smart card}
+%------------------------------
+\subsection{Caratteristiche  delle smart card}
 
 Ci sono due criteri che permettono di classificare le smart card. Basandoci sulle potenzialità del circuito possiamo definire le smartcard a sola memoria o a microprocessore. Invece il tipo di interfaccia di collegamento ci permettono di distinguere smartcard a contatto, senza contatto e con antenna e contattiera (ovvero a doppia interfaccia).
 
 Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre le card a microprocessore possono effettuare elaborazioni. Infine le smarcard a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni. Mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
 
-Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (ISO 14443 e ISO 15693).
+Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (ISO 14443 e ISO 15693). Lo standard ISO 7816 sarà trattato più nel dettaglio nel paragrafo \ref{standard}.
 
 Le smart card a microprocessore sono particolarmente utilizzate per conservare in maniera sicura una chiave privata. Grazie alla loro capacità di elaborazione sono in grado di ricevere una piccola quantità di dati (come ad esempio un hash di un documento) e restituirlo crittografato con la chiave privata contenuta al loro intero. In questo modo la chiave non "esce" mai dal microprocessore, e quindi non può essere letta in alcun modo. Grazie a questa caratteristica le smart card costituiscono un elemento sicuro per la firma digitale di documenti.
 \cite{wiki_sc}
 
-\section{Le smart card nella firma digitale}
-Come accennato nel paragrafo precedente, uno degli utilizzi delle smartcard più frequente è quello nell'ambito della firma digitale.
+%-----------------SECTION-----------------
+\section{Principali utilizzi delle smart card}
+Oggigiorno le smart card sono vastamente utilizzate in una serie di ambiti e applicazioni differenti. In questa sezione sono elencati i principali utilizzi che vengono fatti al giorno d'oggi.
+%------------------------------
+\subsection{Le smart card nella firma digitale}
+Come accennato nel paragrafo precedente, uno degli utilizzi delle smart card più frequente è quello nell'ambito della firma digitale.
 
 La firma digitale è un insieme di metodi crittografici che servono a garantire l'autenticità di un messaggio trasmesso su canali non sicuri. Offrendo al destinatario tre garanzie:
 \begin{itemize}
@@ -44,14 +50,15 @@ La chiave pubblica è solitamente fornita da una Certification Autority (CA) che
 Il ruolo che la smart card gioca nella firma digitale consiste nel conservare la chiave privata in un luogo sicuro. Il codice è infatti salvato sulla memoria del chip presente sulla card, che poi viene reso inaccessibile dall'esterno. Una volta collegata la card a un calcolatore, tramite un apposito lettore, al momento della firma viene inviato alla card la stringa identificativa del file. La scheda provvederà poi a crittografare la stringa e a restituire il risultato dell'elaborazione al PC che provvederà infine ad allegare la vera e propria firma al documento.
 \cite{Wiki_fd}
 
-\section{La smart card nella telefonia mobile}
+%------------------------------
+\subsection{Le smart card nella telefonia mobile}
 Un altro utilizzo molto frequente delle smart card è quello nell'ambito della telefonia mobile.
 
 Viene detta SIM (dall'inglese Subscriber Identity Module) una smart card che viene inserita in un telefono cellulare e utilizzata dagli operatori telefonici per conservare in modo sicuro il codice identificativo dei loro clienti (l'IMSI che corrisponde alla sigla inglese International Mobile Subscriber Identity).
 
 Le caratteristiche tipiche di una smart card SIM sono riassunte nella tabella \ref{parametri_SIM}.
 
-\begin{table}
+\begin{table}[h!]
 \centering
 \begin{tabular}{ |c|c| } 
  \hline
@@ -88,16 +95,91 @@ La SIM è protetta da un codice PIN composto solitamente da 4 o 8 cifre, l'utent
 Il funzionamento della SIM è molto semplice. Una volta che l'operatore riconosce il codice presente sulla carta come valido e presente nel proprio database il dispositivo mobile viene agganciato alla rete e resta in attesa che l'utente richieda un particolare servizio. Una volta effettuata la richiesta, l'operatore verifica se il servizio può essere erogato controllando ad esempio le offerte attive e il credito disponibile e può decidere se accettare o rifiutare la richiesta.
 \cite{Wiki_sim}
 
-\subsection{Altre funzionalità della SIM}
+%------------------------------
+\subsubsection{Altre funzionalità della SIM}
 La SIM card oltre a conservare il codice identificativo dell'utente offre allo stesso anche alcune funzionalità, come ad esempio il salvataggio di contatti telefonici, utile quando si cambia cellulare e non si vuole perdere la lista di contatti salvata in rubrica.
 
 Inoltre alcuni operatori offrono delle semplici applicazioni presenti all'interno delle loro SIM card, che presentano un'interfaccia molto semplice (a menù) con alcune funzioni che possono essere richieste dall'utente. Queste applicazioni possono anche aprire URL, mandare SMS, avviare chiamate e reagire a particolari eventi come l'arrivo di una chiamata o la disconnesione di una chiamate (per inviare, ad esempio, un SMS all'utente con il credito residuo o i minuti ancora disponibili nell'offerta). Inoltre c'è la possibilità di interagire con altre card, nel caso di telefoni dual SIM.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=100pt]{pictures/icona_aplet_fastweb.jpg}
+  \caption{Icona dell'applet della SIM di Fastweb.}
+  \label{fig:app_icon}
+\end{figure}
+
+Nella figura \ref{fig:app_icon} è possibile vedere l'icona dell'applet fornito dall'operatore Fastweb, mentre nella figura \ref{fig:app_screen} è possibile vederne la schermata principale.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=150pt]{pictures/screen_aplet_fastweb.jpg}
+  \caption{Schermata dell'applet della SIM di Fastweb.}
+  \label{fig:app_screen}
+\end{figure}
+
+
 Il modo più semplice per realizzare applicazioni che girano su smart card (più propriamente dette applet) è quello di utilizzare il liguaggio Java e le Java Cad, di cui si parlerà più nel dettaglio nel paragrafo \ref{java_card}.
 \cite{secret_life}
 
-    
-    
+%------------------------------
+\subsection{Le smart card nel settore bancario}
+Un altro ambito nel quale le smart card sono ampiamente utilizzate è quello del settore bancario nel quale sono utilizzate per la realizzazione di carte di credito.
+
+Le carte di credito sono dispositivi molto utilizzati per l'elaborazione di pagamenti e/o il trasferimento di denaro. E si tratta di dispositivi in grado di identificare l'utente utilizzatore e la banca emittente.
+
+Inizialmente le carte di credito utilizzavano una banda magnetica per memorizzare il codice identificativo, tuttavia, per far fronte a esigenze sempre più stringenti sulla sicurezza e l'affidabilità di questi dispositivi, si è scelto di utilizzare un chip integrato rendendole, a tutti gli effetti, delle smart card. Inoltre un chip, oltre a conservare le informazioni della card in modo più sicuro, ha una memoria molto più ampia di quella che poteva avere una banda magnetica. Grazie a ciò, le card a micro chip possono offrire maggiori funzionalità delle card a banda magnetica, venendo chiamate card "multi-applicazione".
+
+Le dimensioni di una carta di credito, sono definite dallo standard ISO/IEC 7810 ID01 e valgono 85,60 x 53,98 mm con uno spessore di 0,76 mm.
+
+Alle carte di credito è sempre associato un codice PIN che viene inserito ogni volta si vuole effettuare un pagamento.
+
+Le carte di credito vengono principalmente utilizzate per effettuare pagamenti o prelevare denaro. Una transazione effettuata con carta di credito è un processo di autorizzazione tra tre enti:
+\begin{itemize}
+    \item L'Ente emittente, ovvero la società che emette la carta di credito. Questa società stipula un contratto con il titolare della carta che viene considerato suo cliente a tutti gli effetti.
+    \item L'Ente esercente, ovvero il commerciante che aderisce a un circuito di pagamento offrendo ai propri clienti un metodo di pagamento alternativo al contante. Per aderire al circuito, l'esercente di rivolge a una società di gestione terminali che offre la vendita o l'affitto di dispositivi POS (Point of sale) tramite i quali l'esercente può elaborare i dati della carta di credito del proprio cliente.
+    \item Il circuito di pagamenti, invece, è l'azienda che crea e gestisce una propria rete di comunicazione alla quale sono collegati i POS degli esercenti tramite la quale viaggiano le richieste di pagamento e le eventuali autorizzazioni.
+\end{itemize}
+Quindi la transazione avviene attraverso tre attori:
+\begin{enumerate}
+    \item Il \textit{titolare} della carta che si impegna a restituire i soldi della spesa all'emittente della carta secondo quanto stabilito nel contratto.
+    \item Il \textit{fornitore} che eroga i servizi o i beni richiesti dal titolare della carta.
+    \item L'\textit{istituto} emittente che si impegna a pagare il fornitore il prezzo stabilito drante la transazione a meno di eventuali canoni concordati in fase di stipula del contratto con il fornitore.
+\end{enumerate}
+
+Tra le principali tipologie di carte di credito la più comune è sicuramente la \textit{Carta di credito "a saldo"}, fornita dalle banche a seguito dell'apertura di un conto corrente. Questa card da la possibilità di pagare tutte le spese effettuate in un mese solare in un'unica soluzione il mese successivo.
+
+Un'altra tipologia di carta molto comune, sempre emessa dalle banche è la cosiddetta \textit{Carta di credito rateale o rotativo} che permette di rateizzare i pagamenti della merce aquistata.
+
+Le principali carte di credito sono:
+\begin{itemize}
+    \item American Express
+    \item Diners
+    \item Visa
+    \item MasterCard
+    \item JCB
+    \item Discover Card
+    \item China UnionPay
+\end{itemize}
+
+Inoltre la prima cifra del codice della card serve per identificare il circuito di appartenenza, e per questo è sempre la stessa per ogni carta appartenente al medesimo circuito.
+\begin{itemize}
+    \item Diners: 3
+    \item American Express: 3
+    \item Visa: 4
+    \item MasterCard: 5
+    \item Discover Card: 6
+\end{itemize}
+
+L'unico rischio a cui si può incorrere quando si ha una carta di credito consiste nella possibilità di smarrimento e/o clonazione dei codici usati per l'autenticazione e l'autorizzazione del pagamento. In caso di furto ho smarrimento è sempre possibile bloccare la carta effettuando la richiesta presso il proprio fornitore.
+\cite{Wiki_cc}
+
+%------------------------------
+\subsection{Le smart card nell'identificazione}
+
+%-----------SECTION------------
+\section{Breve storia delle smart card}
+
 % \subsection{Sottosezione}
 %    \begin{equation}
 %    	x_n = c \, x_n(1 - x_n)
