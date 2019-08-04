@@ -1,12 +1,34 @@
 \chapter{Smartcard}
 \label{chapter2}
 
-
-
 %-----------SECTION------------
 \section{Java Card}
 \label{java_card}
+La tecnologia JavaCard permette di realizzare applicazioni in linguaggio Java, dette applet, da far girare sui chip delle smart card in sicurezza. Questa teclogogia è ampiamente utilizzata nel settore delle SIM (di cui un esempio è riportato nel paragrafo \ref{applet_sim}) e delle carte bancarie.
+\cite{Wiki_java}
+
+Con l'ausilio del manuale ufficiale pubblicato da Oracle \cite{javacard3platform} verrà illustrata sinteticamente la piattaforma \textbf{Java Card 3} ovvero un kit di sviluppo per applet Java Card.
+\subsection{Architettura della piattaforma}
+L'architettura classica della piattaforma è costruita su una classica macchina virtuale java.
+
+Il kit di sviluppo include anche un simulatore (\textit{Java Card RE}) che simula l'ambiente che si avrebbe su una carta fisica e implementa le specifiche dello stadard ISO:7816-4:2013 che è trattato più approfonditamente nel paragrafo \ref{standard}. Il simulatore supporta anche venti canali logici e le estensioni APDU (\textit{Application Protocol Data Units}) definite nello standard ISO 7816-3.
+\subsubsection{Java Card TCK}
+Nel kit di sviluppo fornito da Oracle viene anche fornita una suite di test automatica e configurabile chiamata \textit{Java Card Technology Compatibility Kit} atta a verificare la compatibilità tra l'applet che si stà sviluppando e le specifiche della carta sulla quale la si vuole far girare.
+
+\subsection{Sviluppo degli applet}
+Lo sviluppo delgi applet può essere effettuato tramite l'ide Eclipse installando l'\textit{Eclipse Java Card Plug-in}.
+
+I passaggi per lo sviluppo di un applet sono i seguenti:
+\begin{itemize}
+    \item Installare e impostare l'ambiente di sviluppo usando l'IDE Eclipse e il Plug-in
+    \item Prendere familiarità con gli esempi.
+    \item Sviluppare l'applet.
+    \item Fare il debugging dell'applet.
+    \item Creare il file CAP che può essere scaricato sul simulatore o su una card compatibile. Il file viene inviato tramite APDU. Il kit offre un convertitore utilizzabile per generare file CAP da inviare alla scheda.
+\end{itemize}
+
 
 %-----------SECTION------------
 \section{Lo standard ISO 7816}
+
 \label{standard}
