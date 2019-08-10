@@ -2,6 +2,10 @@
 \label{chapter2}
 
 %-----------SECTION------------
+\section{Lo standard ISO 7816}
+\label{standard}
+
+%-----------SECTION------------
 \section{Java Card}
 \label{java_card}
 La tecnologia JavaCard permette di realizzare applicazioni in linguaggio Java, dette applet, da far girare sui chip delle smart card in sicurezza. Questa teclogogia è ampiamente utilizzata nel settore delle SIM (di cui un esempio è riportato nel paragrafo \ref{applet_sim}) e delle carte bancarie.
@@ -24,11 +28,107 @@ I passaggi per lo sviluppo di un applet sono i seguenti:
     \item Prendere familiarità con gli esempi.
     \item Sviluppare l'applet.
     \item Fare il debugging dell'applet.
-    \item Creare il file CAP che può essere scaricato sul simulatore o su una card compatibile. Il file viene inviato tramite APDU. Il kit offre un convertitore utilizzabile per generare file CAP da inviare alla scheda.
+    \item Creare il file CAP che può essere scaricato sul simulatore o su una card compatibile. Il file viene inviato tramite APDU. Il kit offre un convertitore utilizzabile per generare file CAP da inviare alla scheda (vedere il paragrafo \ref{cap}).
 \end{itemize}
 
+\subsection{Utilizzo dei file CAP}
+\label{cap}
+Per essere installato su una smart card un applet deve essere convertito in Converted Applet (CAP). Per generare questo tipo di file il kit mette a disposizione un convertitore.
 
-%-----------SECTION------------
-\section{Lo standard ISO 7816}
 
-\label{standard}
+Un file CAP utilizza il formato JAR (Java Archive) e, oltre a varie informazioni sul pacchetto Java, contiene un manifesto (\textit{META-INF/MANIFEST.MF}) che fonrnisce una serie di informazioni riguardanti il file. Queste informazioni possono essere usate per facilitare la distribuzione del file.
+
+Le informazioni presenti nel file sono presentate con lo standard \textit{nome:valore} e sono riportate nella tabella \ref{parametri_manifesto}.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ |c|l| } 
+ \hline
+ \textbf{Nome} &  \textbf{Descrizione del valore} \\
+ \hline
+ Java-Card-Creation-Time &  Indica quando è stato generato il file CAP \\
+ \hline
+ Java-Card-Converter-Version & Indica la versione del convertitore utilizzata \\ 
+ \hline
+ Java-Card-Converter-Provider & Indica il fornitore del convertitore \\ 
+ \hline
+ Java-Card-File-Version & Versione del file CAP \\
+  & secondo la convenzione \textit{maggiore.minore} \\ 
+ \hline
+ Java-Card-Package-Version & Versione del pacchetto file CAP\\
+  & secondo la convenzione \textit{maggiore.minore} \\ 
+ \hline
+ Java-Card-Package-AID & AID (\textit{JADE Agent Identifier}) del pacchetto \\
+ \hline
+ Java-Card-Package-Name & Il nome del pacchetto \\
+ \hline
+ Java-Card-Applet-$<$n$>$-AID & AID (\textit{JADE Agent Identifier}) dell'applet \textit{n}\\
+ \hline
+ Java-Card-Applet-$<$n$>$-Name & Il nome breve della classe \textit{n} \\
+  & implementata dal CAP \\
+ \hline
+ Java-Card-Import-Package-$<$n$>$-AID & AID (\textit{JADE Agent Identifier})\\
+  & del pacchetto \textit{n} importato \\
+ \hline
+ Java-Card-Import-Package-$<$n$>$-Version & Versione del pacchetto \textit{n} importato\\
+  & secondo la convenzione \textit{maggiore.minore}\\
+ \hline
+ Java-Card-Integer-Support-Required & Può assumere valori \textit{TRUE} o \textit{FALSE}.\\
+  & Il valore vero indica che il pacchetto\\
+   & richiede l'integer support \\
+ \hline
+ 
+\end{tabular}
+\caption{Tabella dei parametri presenti nel manifesto del file.}
+\label{parametri_manifesto}
+\end{table}
+
+\subsubsection{Generazione di un file CAP}
+Per generare un file CAP è possibile utilizzare il tool \textit{capgen} fornito dal kit.
+
+Per avviare il tool è possibile usare il comando
+\begin{center}
+    \textit{capgen.bat \textbf{[opzioni] nome\_del\_file}}.
+\end{center}
+
+Le opzioni disponibili sono:
+\begin{itemize}
+    \item \textbf{-help} che stampa un messaggio di aiuto
+    \item \textbf{-nobanner} che sopprime i vari messaggi
+    \item \textbf{-o \textit{nome\_del\_file}}.
+\end{itemize}
+ 
+\subsection{Fare il debugging delle applicazioni}
+Per effettuare il debugging delle applicazioni il kit offre due tool che lavorano insieme per alleggerire la procedura, altrimenti troppo impegnativa per la virtual machine del simulatore.
+
+Il primo tool, \textit{cref} può essere lanciato direttamente da Eclipse o da riga di comando e ha la possibilità di simulare la memoria persistente (EEPROM) nonché di salvare e recuperare i dati salvati sulla memoria o su file presenti sull'hard disk. Inoltre il tool può eseguire operazioni di I/O tramite un'interfaccia socket che simula il collegamento tra il lettore di carte e il computer.
+
+Per il debugging l'IDE utilizza il Java Debug Wire Protocol (JDWP) che, come accennato, è troppo pesante per la piccola VM utilizzata dal simulatore fornito dal kit. Per questo per il debugging viene utilizzato un protocollo proprietario più leggero.
+
+Il secondo tool offerto è il \textit{debugproxy}, esso ha il compito di tradurre comandi e risposte tra l'IDE e il simulatore \textit{cref} utilizzando il protocollo appropriato.
+
+Dato che i tool \textit{cref}, \textit{debugproxy} e l'IDE comunicano tramite socket, essi possono girare su host diversi.
+
+Da Eclipse è possibile far partire il debug proxy per impostare breakpoints, leggere o ipostare variabili e fare il debug di una libreria.
+
+\subsection{Distribuire le proprie applicazioni}
+Il kit permette di scaricare un Java Card technology package, effettuare il collegamento con la card, eliminare applets e pacchetti dalla smart card e impostare le applet di default per i vari canali logici.
+
+Per installare l'applicazione su una card bisogna prima convertire i file .class in file .cap utilizzando il convertitore fornito dal kit, successivamente il tool \textit{scriptgen}, ovvero l'off-card installer converte il file .cap in uno script .scr che consiste in una serie di comandi APDU che vengono eseguiti dall'APDUtool. Infine l'on-card installer processa il file CAP e invia gli APDU di risposta all'APDUtool con lo stato ed eventuali dati.
+
+Il file .scr contiene comandi e C-APDU che sono terminati da un punto e virgola.
+La sintassi di un C-APDU è la seguente:
+\begin{center}
+    $<$CLA$>$ $<$INS$>$ $<$P1$>$ $<$P2$>$ $<$LC$>$ [$<$byte 0$>$...$<$byte LC-1$>$] $<$LE$>$;
+\end{center}
+dove
+\begin{itemize}
+    \item $<$CLA$>$ è il byte della classe definito dallo standard ISO 7816-4.
+    \item $<$INS$>$ è il byte di istruzione definito dallo standard ISO 7816-4.
+    \item $<$P1$>$, $<$P2$>$ sono i parametri P1 e P2 definiti dallo standard ISO 7816-4.
+    \item $<$LC$>$ è il numero dei byte inviati (1 in modalità non estesa, 2 in modalità estesa).
+    \item $<$byte 0$>$...$<$byte LC-1$>$ sono i byte per i dati di input.
+    \item $<$LE$>$ è la lunghezza che ci si aspetta per l'output (1 in modalità non estesa, 2 in modalità estesa).
+\end{itemize}
+
+Il protocollo utilizzato per installare un applet è composto da una sequenza di comandi ben precisa. Per prima cosa viene inviato un comando di selezione utilizzato per invocare l'on-card installer, segue un comando di CAP Begin. Successivamente viene ripetuta una seria di 3 comandi per ogni componente presente nel file CAP (Component \#\# Begin, Component \#\# Data, Component \#\# End). La sequenza viene conclusa dai comandi CAP End e Create Applet. Ogni comando viene inviato alla card e riceve una risposta che varia a seconda del comando.
