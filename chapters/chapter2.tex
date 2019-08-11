@@ -5,6 +5,42 @@
 \section{Lo standard ISO 7816}
 \label{standard}
 
+Lo standard ISO 7816 è uno standard internazionale gestito dalla ISO (International Organization for Standardization) e dalla IEC (International Electrotechnical Commission).
+
+Lo standard è composto da varie parti, ognuna delle quali serve per descrivere un dato aspetto delle card, le più importanti sono le prime 4 che descrivono le caratteristiche fisiche ed elettroniche della carta nonché l'organizzazione dei file, la sicurezza e i comandi per lo scambio di informazioni.
+\cite{wiki_iso}
+
+\subsubsection{ISO 7816-1, ISO 7816-2}
+La prima e la seconda parte dello standard descrivono le caratteristiche prettamente fisiche della card, come la dimensione della carta e dei contatti, la resistenza a flessione e piegamento nonché i materiali da utilizzare per la loro fabbricazione. Questo per garantire elevati standard di sicurezza e un tempo di vita adeguato.
+
+Inoltre lo standard definisce anche i limiti di esposizione a raggi X, luce ultravioletta, campi elettromagnetici e temperatura che la carta deve sopportare.
+
+Tutte queste informazioni servono ai costruttori per la fabbricazione delle carte.
+\cite{iso}
+
+\subsubsection{ISO 7816-3}
+La terza parte dello standard definisce le caratteristiche elettriche dei contatti e i protocolli di comunicazione con la card. Queste informazioni sono di fondamentale importanza per chi fabbrica lettori o per sviluppatori che vogliono stabilire una comunicazione con il chip presente sulla scheda.
+\cite{iso}
+
+In particolare ci sono tre classi di carte a seconda della tensione di alimentazione alla quale lavorano (VCC): Classe A (VCC = 5V), classe B (VCC = 3V) e classe C (VCC = 1.8V).
+
+Sulla card sono presenti 7 contatti, il primo e il quinto sono rispettivamente l'alimentazione (VCC) e il ground (GND), il secondo serve per inviare un segnale di reset, il terzo serve per inviare gli impulsi del clock. Il sesto contatto viene riservato per un utilizzo standard o proprietario come senconda porta I/O. Infine l'ultimo contatto (il settimo) serve per un I/O dei dati in maniera seriale. Il sesto contatto dal 1990 viene spesso utilizzato per fornire alla scheda una tensione di programmazione.
+\cite{isoiec3}
+
+\subsubsection{ISO 7816-4}
+La quarta parte dello standard è sicuramente la più interessante per i programmatori che utilizzano un linguaggio più ad alto livello (come ad esempio il Java - paragrafo \ref{java_card}) per realizzare applet, salvare informazioni o far eseguire alcune operazioni dal processore della scheda.
+
+In questa parte dello standard sono indicati i comandi che può ricevere una smart card insieme alla struttura del file system e l'architettura di sicurezza che definisce i diritti di accesso ai dati presenti sulla memoria della card.
+
+Per comunicare con la carta va inviato un comando e attendere la risposta, come indicato dalla terza parte dello standard, i bit vengono inviati e letti in maniera sequenziale. In particolare un comando è composto da un header e da un corpo. L'header è composto da tre campi: 1 byte di classe denotato CLA, 1 byte di istruzione denotato INS e 2 byte per i parametri denotati P1 e P2 rispettivamente.
+
+All'header seguono una serie di byte per l'invio di eventuali dati alla card. Il primo byte indica il numero di byte che saranno inviati, questo è denominato come L\textsubscript{c}. Questo campo può non essere presente se non vengono inviati dati, oppure occupare fino a 3 byte. Ovviamente subito dopo si hanno gli N byte indicati dal campo L\textsubscript{c} usati per inviare i dati necessari alla carta. Infine il comando si chiude con un campo L\textsubscript{e} che indica il numero massimo di byte che ci si aspetta come risposta dalla carta. Anche questo campo può essere assente o occupare fino a 3 byte.
+
+La risposta è molto più semplice e contiene solo due campi: Il primo è un numero di byte al più uguale a quanto indicato dal campo L\textsubscript{e} che contiene gli eventuali dati inviati dalla risposta. Il secondo campo, è formato da due byte di stato denominati rispettivamente SW1 e SW2.
+\cite{isoiec3}
+
+
+
 %-----------SECTION------------
 \section{Java Card}
 \label{java_card}
