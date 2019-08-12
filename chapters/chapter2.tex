@@ -10,7 +10,7 @@ Lo standard ISO 7816 è uno standard internazionale gestito dalla ISO (Internati
 Lo standard è composto da varie parti, ognuna delle quali serve per descrivere un dato aspetto delle card, le più importanti sono le prime 4 che descrivono le caratteristiche fisiche ed elettroniche della carta nonché l'organizzazione dei file, la sicurezza e i comandi per lo scambio di informazioni.
 \cite{wiki_iso}
 
-\subsubsection{ISO 7816-1, ISO 7816-2}
+\subsection{ISO 7816-1 e ISO 7816-2}
 La prima e la seconda parte dello standard descrivono le caratteristiche prettamente fisiche della card, come la dimensione della carta e dei contatti, la resistenza a flessione e piegamento nonché i materiali da utilizzare per la loro fabbricazione. Questo per garantire elevati standard di sicurezza e un tempo di vita adeguato.
 
 Inoltre lo standard definisce anche i limiti di esposizione a raggi X, luce ultravioletta, campi elettromagnetici e temperatura che la carta deve sopportare.
@@ -18,7 +18,7 @@ Inoltre lo standard definisce anche i limiti di esposizione a raggi X, luce ultr
 Tutte queste informazioni servono ai costruttori per la fabbricazione delle carte.
 \cite{iso}
 
-\subsubsection{ISO 7816-3}
+\subsection{ISO 7816-3}
 La terza parte dello standard definisce le caratteristiche elettriche dei contatti e i protocolli di comunicazione con la card. Queste informazioni sono di fondamentale importanza per chi fabbrica lettori o per sviluppatori che vogliono stabilire una comunicazione con il chip presente sulla scheda.
 \cite{iso}
 
@@ -27,7 +27,7 @@ In particolare ci sono tre classi di carte a seconda della tensione di alimentaz
 Sulla card sono presenti 7 contatti, il primo e il quinto sono rispettivamente l'alimentazione (VCC) e il ground (GND), il secondo serve per inviare un segnale di reset, il terzo serve per inviare gli impulsi del clock. Il sesto contatto viene riservato per un utilizzo standard o proprietario come senconda porta I/O. Infine l'ultimo contatto (il settimo) serve per un I/O dei dati in maniera seriale. Il sesto contatto dal 1990 viene spesso utilizzato per fornire alla scheda una tensione di programmazione.
 \cite{isoiec3}
 
-\subsubsection{ISO 7816-4}
+\subsection{ISO 7816-4}
 La quarta parte dello standard è sicuramente la più interessante per i programmatori che utilizzano un linguaggio più ad alto livello (come ad esempio il Java - paragrafo \ref{java_card}) per realizzare applet, salvare informazioni o far eseguire alcune operazioni dal processore della scheda.
 
 In questa parte dello standard sono indicati i comandi che può ricevere una smart card insieme alla struttura del file system e l'architettura di sicurezza che definisce i diritti di accesso ai dati presenti sulla memoria della card.
@@ -37,9 +37,38 @@ Per comunicare con la carta va inviato un comando e attendere la risposta, come 
 All'header seguono una serie di byte per l'invio di eventuali dati alla card. Il primo byte indica il numero di byte che saranno inviati, questo è denominato come L\textsubscript{c}. Questo campo può non essere presente se non vengono inviati dati, oppure occupare fino a 3 byte. Ovviamente subito dopo si hanno gli N byte indicati dal campo L\textsubscript{c} usati per inviare i dati necessari alla carta. Infine il comando si chiude con un campo L\textsubscript{e} che indica il numero massimo di byte che ci si aspetta come risposta dalla carta. Anche questo campo può essere assente o occupare fino a 3 byte.
 
 La risposta è molto più semplice e contiene solo due campi: Il primo è un numero di byte al più uguale a quanto indicato dal campo L\textsubscript{e} che contiene gli eventuali dati inviati dalla risposta. Il secondo campo, è formato da due byte di stato denominati rispettivamente SW1 e SW2.
+
+\subsubsection{File system}
+Come specificato dallo standard ISO 7816-4 i file presenti sulla smart card si dividono principalmente in due categorie: i file dedicati (DF - dedicated files) e i file elementari (EF - elementary files). I primi sono i file delle applicazioni e delle strutture dati, mentre i secondi sono file che contengono dati. I DF possono essere imparentati tra di loro, mentre ciò non è possibile per gli EF. Gli EF sono a loro volta divisi in due categorie gli EF di lavoro e gli EF inteni. I primi sono utilizzati "dal mondo esterno" mentre i secondi sono dati interni utilizzati dalla carta.
+
+I file sono organizzati in una struttura albero il cui file DF che si trova alla radice viene chiamato master file (MF), come mostrato in figura \ref{fig:file_system}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=400pt]{pictures/gerarchia_file.png}
+  \caption{Esempio di una gerarchia di file in una smartcard.}
+  \label{fig:file_system}
+\end{figure}
+
+\subsubsection{Sicurezza}
+L'accesso ai file è, naturalmente, protetto. Lo standard fa riferimento a uno stato di sicurezza ovvero uno stato che è possibile ottenere al seguito di una procedura di autenticazione nella quale viene richiesta, ad esempio, la conoscenza di una password o di una key.
+
+Vengono considerate quattro tipologie di stato di sicurezza:
+\begin{itemize}
+    \item \textbf{Stato di sicurezza globale}, è solitamente legato a una procedura di autenticazione risiedente nel MF e quindi serve per proteggere l'itera struttura del file system.
+    \item \textbf{Stato di sicurezza specifico per un'applicazione}, può essere modificato al seguito del completamento di una procedura di autenticazione basata su un'applicazione può essere mantenuto, perso o recuperato quando durante la procedura di selezione di un'applicazione. Questo stato è rilevante solo per l'applicazione alla quale fa riferimento.
+    \item \textbf{Stato di sicurezza specifico per un file}, il funzionamento è simile allo stato relativo a un'applicazione, tuttavia lo stato si basa su un DF specifico e può essere mantenuto, perso o recuperato quando viene selezionato un file. Uno stato di sicurezza globale può essere visto come un caso particolare.
+    \item \textbf{Stato di sicurezza relativo a un comando}, quest'ultimo stato esiste solo quando viene processato un comando usando una comunicazione sicura che richiede un'autenticazione.
+\end{itemize}
+
+Una volta stabilito lo stato in cui si trova chi sta comunicando con la carta, è possibile definire gli attributi di sicurezza, questi definiscono le azioni permesse e le condizioni che devono essere verificate per poterle effettuare. Questi attributi differiscono tra DF e EF e si basano su parametri opzionali presenti in un dato file o nel suo "padre". In particolare questi attributi specificano in quale stato bisogna trovarsi per poter accedere a un dato file e le funzioni (ad esempio \textit{sola lettura}) che sono disponibili quando ci troviamo in un dato stato.
+
+Ultimo aspetto da considerare sono i meccanismi di sicurezza per l'autenticazione. Prima di tutto troviamo l'autenticazione tramite password o tramite key, per la prima la card compara dati inviati dall'esterno con dati segreti presenti al suo interno, mentre per la seconda viene richiesto a chi vuole accedere alla card di mostrare le conoscenza di una chiave privata.
+
+Un altro meccanismo di sicurezza è quello sull'autenticazione dei dati che consiste nell'utilizzo di una chiave segreta o privata per controllare i dati ricevuti dall'esterno. In alternativa la card può usare sempre una chiave segreta o privata per calcolare una checksum o firma digitale da inviare al lettore. Infine l'ultimo meccanismo disponibile e quello della crittografia dei dati, secondo il quale la scheda decifra o cifra dati scambiati con l'esterno usando una chiave segreta o privata.
+
+Se richiesto dall'applicazione i risultati di un'autenticazione possono essere salvati su un file di log interno (EF).
 \cite{isoiec3}
-
-
 
 %-----------SECTION------------
 \section{Java Card}
