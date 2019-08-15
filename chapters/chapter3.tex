@@ -1,4 +1,11 @@
 \chapter{Token crittografici}
 \label{chapter3}
 
+Un token crittografico è un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori). Esso si presenta sotto forma di dispositivo elettronico molto piccolo e facile da trasportare dotato di batterie.
 
+Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo setto algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
+
+I numeri generati, insieme a un codice PIN fornito all'utente generano una password temporanea di sessione, valida cioè per un periodo limitato. L'autenticazione viene detta a due fattori perchè richiede sia la conoscenza del PIN che il possesso del token (univoco).
+
+Il token rende un accesso molto più sicuro in quanto la password generata è valida per un periodo di tempo limitato, quindi un eventuale malintenzionato che volesse tentare di indovinare la password ha un tempo molto limitato per trovarla ed utilizzarla.
+\cite{wiki_token}
