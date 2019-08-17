@@ -9,3 +9,33 @@ I numeri generati, insieme a un codice PIN fornito all'utente generano una passw
 
 Il token rende un accesso molto più sicuro in quanto la password generata è valida per un periodo di tempo limitato, quindi un eventuale malintenzionato che volesse tentare di indovinare la password ha un tempo molto limitato per trovarla ed utilizzarla.
 \cite{wiki_token}
+
+\section{Trusted Platform Module}
+Un Trusted Platform Module (o TPM) è un microchip elettronico utilizzato per la sicurezza informatica e implementato nelle schede madri o in altri dispositivi elettronici. Questi chip sono dotati di una coppia di chiavi e un modulo che implementa la crittografia asimmetrica (RSA) dei dati. Essendo le chiavi diverse per ogni dispositivo, esse permettono di identificarlo univocamente.
+
+Le specifiche di questo tipo di dispositivi sono state pubblicate dal \textit{Trusted Computing Group}. Le funzionalità che questo dispositivo deve poter offrire sono:
+\begin{itemize}
+    \item La generazione di numero pseudo-casuali.
+    \item La generazione e memorizzazioni di chiavi crittografiche asimmetriche.
+    \item La cifratura e de-cifratura di dati mediante l'algoritmo RSA.
+    \item La generazione e verifica di hash SHA1
+\end{itemize}
+Per realizzare queste funzionalità il chip deve avere una serie di componenti che comunicano utilizzando un bus interno e in grado di comunicare con il bus della scheda madre sulla quale il dispositivo è installato.
+
+\subsubsection{Dispositivo I/O}
+Come accennato il dispositivo I/O deve essere in grado di far passare le informazioni dal bus interno del chip a quello esterno e viceversa.
+
+\subsubsection{Coprocessore Crittografico}
+Il coprocessore crittografico deve essere in grado di garantire le funzionalità che sono state elencate in precedenza. Questo dispositivo può anche utilizzare la crittografia asimmetrica per scambiare dati internamente. Inoltre per la firma digitale si usano chiavi a 2048 byte anche se il modulo deve comunque supportare chiavi a 512 e 1024 byte.
+
+\subsubsection{Generatore di Chiavi Crittografiche}
+Questo dispositivo deve semplicemente generare una coppia di chiavi crittografiche secondo L'Algoritmo RSA. Non ci sono specifiche sul tempo necessario per il calcolo, che può essere arbitrariamente lungo.
+
+\subsubsection{Motore HMAC}
+Si tratta di un dispositivo preposto alla verifica che i dati di identificazione siano corretti e al tempo stesso non siano stati manipolati. Per ottenere ciò si utilizza l'algoritmo HMAC con chiavi di 20 byte e blocchi di dati di 64 byte. Questo algorimo, utilizzando una parte del messaggio originale e della chiave per la crittografia dei dati, garantisce massima sicurezza.
+
+\subsubsection{Generatore di Numeri Pseudocasuali}
+Il generatore di numeri pseudocasuali serve per introdurre della casualità all'interno del TPM. Viene utilizzato per generare le chiavi asimmetriche per la firma digitale. Questo dispositivo deve essere composto da un componente in grado di ricevere dati imprevedibili e un coprocessore in grado di generare i numeri utilizzando una funzione non invertibile. Ogni volta che viene attivato, il generatore deve fornire 32 byte di dati casuali.
+
+Quando viene prodotto il TPM il generatore viene inizializzato con dati casuali tramite disturbi termici o via software. Una volta inizializzato nessuno (nemmeno il produttore) deve poter essere in grado di modificare lo stato del componente. Durante il suo funzionamento il generatore utilizzerà altri dati imprevedibili come ad esempio il movimento del mouse o i tasti premuti sulla tastiera. Infine la funzione di output riceve un numero minore di input per produrre i dati necessari, in modo da creare ambiguità e garantire l'invertibilità della funzione utilizzata.
+\cite{wiki_tpm}
