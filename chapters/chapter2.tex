@@ -1,4 +1,4 @@
-\chapter{Smartcard}
+\chapter{Smart card}
 \label{chapter2}
 
 %-----------SECTION------------
@@ -197,3 +197,52 @@ dove
 \end{itemize}
 
 Il protocollo utilizzato per installare un applet è composto da una sequenza di comandi ben precisa. Per prima cosa viene inviato un comando di selezione utilizzato per invocare l'on-card installer, segue un comando di CAP Begin. Successivamente viene ripetuta una seria di 3 comandi per ogni componente presente nel file CAP (Component \#\# Begin, Component \#\# Data, Component \#\# End). La sequenza viene conclusa dai comandi CAP End e Create Applet. Ogni comando viene inviato alla card e riceve una risposta che varia a seconda del comando.
+
+\section{Smart Cart Web Server}
+Uno \textit{Smart Card Web Server} (SCWS) è un server HTTP implementato all'interno di una smart card, di solito integrata in uno smartphone (SIM - vedi paragrafo \ref{applet_sim}). Questa tecnologia permette agli operatori di telefonia mobile di offrire determinati servizi utilizzando il diffusissimo protocollo \textit{HTTP/1.1}.
+
+Il principale obiettivo di questa tecnologia è quello di creare una comunicazione interna al dispositivo tra un WEB browser che gira nello smartphone e un server presente sulla card. Permette, inolte, un'amministrazione remota della smart card da un'entità autorizzata (ad esempio il fornitore del servizio di telefonia e/o della card stessa).
+
+L'interfaccia HTTP offerta dalla card si trova a un livello logico separato dall'interfaccia di comunicazione definita dallo standard ISO 7816 (vedi paragrafo \ref{standard}) e permette ad applicazioni HTTP di comunicare con la card in maniera autonoma.
+
+Questo canale di comunicazione è utilizzato dai fornitori per offrire maggiori servizi ai loro clienti.
+
+L'URL utilizzato per la comunicazione deve corrispondere alla definizione data dal protocollo \textit{HTTP/1.1}, ovvero
+
+\begin{center}
+    http\_URL = "http:" "//" host [ ":" port ] [ abs\_path [ "?" query ]]
+\end{center}
+
+La $<query>$ opzionale deve essere una sequuenza di uno o più termini della forma $<name>=<value>$ separati da un '\&'. Il server deve poter rispondere per lo meno a url di 1024 caratteri e \textit{abs\_path} di 128 caratteri.
+
+\subsection{I protocolli di trasporto}
+Se la card non ha il proprio indirizzo IP e quindi non supporta il protocollo TCP/IP viene utilizzato il protocollo \textit{ Bearer Independent protocol} (BIT). In particolare, nel client viene fatto girare un gateway BIT che effettua una "traduzione" tra i due protocolli (TCP/IP e BIT). Il protocollo BIT è utilizzato per comunicare tra il gateway e la scheda.
+
+L'IP utilizzato per accedere al gateway è 127.0.0.1, meglio come conosciuto come localhost. Il gateway BIP ascolta sulle porte definite dallo SCWS, solitamente si usano le porte 3516 e 4116, la prima è riservata come "porta della smart card", la seconda come "smart card TLS".
+
+Un esempio di url che può essere utilizzato per accedere a una risorsa chiamata "foobar.xhtml" e presente nel percorso "pub/files" è il seguente:
+\begin{center}
+    http://127.0.0.1:3516/pub/files/foobar.xhtml 
+\end{center}
+
+Mentre il seguente url può essere utilizzato per avviare un'applicazione e passarle dei parametri:
+\begin{center}
+    http://127.0.0.1:4116/cgi/SSO?account=username\&otherparam=123 
+\end{center}
+
+Se la smart card ha il proprio indirizzo IP e quindi supporta il protocollo TCP/IP allora il dispositivo mobile ha la possibilità di comunicare direttamente con la card senza dover passare per un gatway BIT.
+
+La connessione è definita dallo standard ETSI TS 102 483]. L'indirizzo IP per comunicare con la card può essere dinamico, tuttavia ci si riferisce chiamandolo “localuicc”. Le porte per la comunicazione sono la 80 per l'HTTP e la 443 per L'HTTP con TLS (presentato le paragrafo \ref{tls}).
+
+Un paio di URL di esempio sono riportati in seguito:
+\begin{center}
+    http://localuicc/pub/files/foobar.xhtml
+    https://localuicc/cgi/display?df=7F01\&ef=3F01\&record=01\&offset=50\&length=10 
+\end{center}
+
+\subsection{Sicurezza della comunicazione}
+\label{tls}
+Per la sicurezza della trasmissione dei dati con la card viene utilizzato il protocollo \textit{Transport Layer Security}  (TLS). Questo protocollo fornisce un meccanismo sicuro ed affidabile per il trasporto dei dati tra due entità, con un controllo dell'integrità e della confidenzialità delle informazioni scambiate. Fornisce anche dei meccanismi di autenticazione per una o entrambe le parti.
+
+Il TLS è pesato per un paradigma Client-Server dove il client è chi inizia la comunicazione (o invia una richiesta) e il server fornisce una risposta. Solitamente il client può autenticare il server utilizzando un certificato a chiave pubblica. Un'auntenticazione mutua può essere effettuata utilizzando dei certificati a chiave pubblica pre-condivisi (\textit{Pre Shared Keys-TLS} o PSK-TLS)
+\cite{scwebserver}

@@ -1,6 +1,7 @@
 \chapter{Token crittografici}
 \label{chapter3}
 
+\section{Introduzione}
 Un token crittografico è un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori). Esso si presenta sotto forma di dispositivo elettronico molto piccolo e facile da trasportare dotato di batterie.
 
 Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo setto algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
@@ -13,6 +14,7 @@ Il token rende un accesso molto più sicuro in quanto la password generata è va
 \section{Trusted Platform Module}
 Un Trusted Platform Module (o TPM) è un microchip elettronico utilizzato per la sicurezza informatica e implementato nelle schede madri o in altri dispositivi elettronici. Questi chip sono dotati di una coppia di chiavi e un modulo che implementa la crittografia asimmetrica (RSA) dei dati. Essendo le chiavi diverse per ogni dispositivo, esse permettono di identificarlo univocamente.
 
+\subsection{Specifiche del TPM}
 Le specifiche di questo tipo di dispositivi sono state pubblicate dal \textit{Trusted Computing Group}. Le funzionalità che questo dispositivo deve poter offrire sono:
 \begin{itemize}
     \item La generazione di numero pseudo-casuali.
@@ -38,4 +40,38 @@ Si tratta di un dispositivo preposto alla verifica che i dati di identificazione
 Il generatore di numeri pseudocasuali serve per introdurre della casualità all'interno del TPM. Viene utilizzato per generare le chiavi asimmetriche per la firma digitale. Questo dispositivo deve essere composto da un componente in grado di ricevere dati imprevedibili e un coprocessore in grado di generare i numeri utilizzando una funzione non invertibile. Ogni volta che viene attivato, il generatore deve fornire 32 byte di dati casuali.
 
 Quando viene prodotto il TPM il generatore viene inizializzato con dati casuali tramite disturbi termici o via software. Una volta inizializzato nessuno (nemmeno il produttore) deve poter essere in grado di modificare lo stato del componente. Durante il suo funzionamento il generatore utilizzerà altri dati imprevedibili come ad esempio il movimento del mouse o i tasti premuti sulla tastiera. Infine la funzione di output riceve un numero minore di input per produrre i dati necessari, in modo da creare ambiguità e garantire l'invertibilità della funzione utilizzata.
+
+\subsubsection{Motore SHA-1}
+Tale componente viene utilizzato per la firma digitale dei file e deve poter gestire hash SHA-1 da 160 bit.
+
+\subsubsection{Gestore di alimentazione}
+Questo dispositivo non solo deve alimentare il TPM, ma deve anche informare i suoi dispositivi interi dello stato dell'alimentazione. Ciò per evitare che possano essere collegati altri dispositivi (operatori esterni) non autorizzati al chip.
+
+\subsubsection{Opt-In}
+Questo componente ha il compito di gestire l'accensione, spegnimento, attivazione e disattivazione del TPM non ché la presenza di operatori esterni collegati al dispositivo. L'Opt-In deve garantire che le operazioni di accensione/spegnimento e attivazione/disattivazione del TPM sono effettuate da utenti abilitati al controllo del TPM (\textit{TPM-Owner}).
+
+\subsubsection{Motore di esecuzione}
+Il compito del motore di esecuzione è quello di eseguire il codice che il chip riceve dal dispositivo di Input/Output garantendo la trasparenza delle operazioni eseguite e la protezione dei dati sensibili.
+
+\subsubsection{Memoria non volatile}
+L'ultimo componente che troviamo nel TPM è una memoria non volatile utilizzata per memorizzare i dati che identificano il TPM. Questa memoria deve poter essere letta solo dal proprietario del modulo per poter conservare i dati in maniera sicura.
+
+\subsection{Utilizzo del TPM}
+Il TPM, per essere utilizzato, richiede un software particolare, ovvero uno specifico \textit{Trusted Software Stack}, definito anch'esso dal Trusted Computing Group.
+
+Utilizzando il software giusto il TPM è in grado di attestare da remoto l'identità della macchina su cui è montato e di cifrare e decifrare i dati che viaggiano da e verso la memoria di massa (quest'ultimo processo è denominato \textit{data sealing} e \textit{data binding}).
+
+Il processo di data sealing consiste nella cifratura dei dati che vengono salvati sulla memoria di massa del PC tramite l'utilizzo di una chiave che dipende dallo stato del computer (ovvero dall'hardware e il software utilizzato in quel momento). Ne consegue che la de-cifratura dei dati può essere fatta solo calcolando la medesima chiave e quindi avendo un PC il cui hardware e software in esecuzione corrisponde a ciò che è stato utilizzato per cifrare i dati.
+
+Il binding dei dati, invece, consiste nella cifratura delle informazioni usando una chiave RSA detta \textit{Endorsment Key} che identifica univocamente il TMP, garantendo, quindi, che i dati possono essere decifrati solamente dal chip utilizzato per cifrarli.
+
+L'attestazione della macchina viene fatta con apposite chiavi dette \textit{Attestation Identity Key} (AIK) generate dal TPM. Tuttavia dalla versione 1.2 è possibile anche utilizzare un protocollo che preserva la riservatezza dei dati del sistema operativo, denominato \textit{Direct Anonymous Attestation}. In sostanta il chip ha particolari registri detti \textit{Platform Configuration Register} (PCR) che utilizza per salvare un hash dell'evoluzione dello stato del sistema effettuando un controllo sull'hardware e software installato e misurandolo secondo la formula \ref{Eq:pcr}.
+    \begin{equation}
+   	PCR[i]_{t1} = SHA1(PCR[i]_{t0} + informazioni\; prelevate_{t1})
+    	\label{Eq:pcr}
+    \end{equation}
+    
+In altre parole, il contenuto dell'i-esimo registro viene aggiornato (al tempo \textit{t1}) con l'hash del contenuto presente nel registro al tempo precedente (ovvero \textit{t0)} più le informazioni prelevate al tempo \textit{t1}. Quando il sistema è evviato il contenuto del PCR è azzerato.
+
+Disponendo delle informazioni conenute nel PCR, il software può autenticare la macchina e decidere quali operazioni intraprendere.
 \cite{wiki_tpm}
