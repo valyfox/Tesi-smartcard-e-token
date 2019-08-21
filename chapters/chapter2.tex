@@ -24,7 +24,7 @@ La terza parte dello standard definisce le caratteristiche elettriche dei contat
 
 In particolare ci sono tre classi di carte a seconda della tensione di alimentazione alla quale lavorano (VCC): Classe A (VCC = 5V), classe B (VCC = 3V) e classe C (VCC = 1.8V).
 
-Sulla card sono presenti 7 contatti, il primo e il quinto sono rispettivamente l'alimentazione (VCC) e il ground (GND), il secondo serve per inviare un segnale di reset, il terzo serve per inviare gli impulsi del clock. Il sesto contatto viene riservato per un utilizzo standard o proprietario come senconda porta I/O. Infine l'ultimo contatto (il settimo) serve per un I/O dei dati in maniera seriale. Il sesto contatto dal 1990 viene spesso utilizzato per fornire alla scheda una tensione di programmazione.
+Sulla card sono presenti 7 contatti, il primo e il quinto sono rispettivamente l'alimentazione (VCC) e il ground (GND), il secondo serve per inviare un segnale di reset, il terzo serve per inviare gli impulsi del clock. Il sesto contatto viene riservato per un utilizzo standard o proprietario come seconda porta I/O. Infine l'ultimo contatto serve per un I/O dei dati in maniera seriale. Il sesto contatto dal 1990 viene spesso utilizzato per fornire alla scheda una tensione di programmazione.
 \cite{isoiec3}
 
 \subsection{ISO 7816-4}
@@ -32,7 +32,7 @@ La quarta parte dello standard è sicuramente la più interessante per i program
 
 In questa parte dello standard sono indicati i comandi che può ricevere una smart card insieme alla struttura del file system e l'architettura di sicurezza che definisce i diritti di accesso ai dati presenti sulla memoria della card.
 
-Per comunicare con la carta va inviato un comando e attendere la risposta, come indicato dalla terza parte dello standard, i bit vengono inviati e letti in maniera sequenziale. In particolare un comando è composto da un header e da un corpo. L'header è composto da tre campi: 1 byte di classe denotato CLA, 1 byte di istruzione denotato INS e 2 byte per i parametri denotati P1 e P2 rispettivamente.
+Per comunicare con la carta va inviato un comando e attesa una risposta, come indicato dalla terza parte dello standard i bit sono inviati e letti in maniera sequenziale. Un comando è composto da un header e da un corpo. L'header è composto da tre campi: 1 byte di classe denotato CLA, 1 byte di istruzione denotato INS e 2 byte per i parametri denotati P1 e P2 rispettivamente.
 
 All'header seguono una serie di byte per l'invio di eventuali dati alla card. Il primo byte indica il numero di byte che saranno inviati, questo è denominato come L\textsubscript{c}. Questo campo può non essere presente se non vengono inviati dati, oppure occupare fino a 3 byte. Ovviamente subito dopo si hanno gli N byte indicati dal campo L\textsubscript{c} usati per inviare i dati necessari alla carta. Infine il comando si chiude con un campo L\textsubscript{e} che indica il numero massimo di byte che ci si aspetta come risposta dalla carta. Anche questo campo può essere assente o occupare fino a 3 byte.
 
@@ -61,7 +61,7 @@ Vengono considerate quattro tipologie di stato di sicurezza:
     \item \textbf{Stato di sicurezza relativo a un comando}, quest'ultimo stato esiste solo quando viene processato un comando usando una comunicazione sicura che richiede un'autenticazione.
 \end{itemize}
 
-Una volta stabilito lo stato in cui si trova chi sta comunicando con la carta, è possibile definire gli attributi di sicurezza, questi definiscono le azioni permesse e le condizioni che devono essere verificate per poterle effettuare. Questi attributi differiscono tra DF e EF e si basano su parametri opzionali presenti in un dato file o nel suo "padre". In particolare questi attributi specificano in quale stato bisogna trovarsi per poter accedere a un dato file e le funzioni (ad esempio \textit{sola lettura}) che sono disponibili quando ci troviamo in un dato stato.
+Una volta stabilito lo stato in cui si trova chi sta comunicando con la carta, è possibile definire gli attributi di sicurezza, questi definiscono le azioni permesse e le condizioni che devono essere verificate per poterle effettuare. Questi attributi differiscono tra DF e EF e si basano su parametri opzionali presenti in un dato file o nel suo ``padre". In particolare questi attributi specificano in quale stato bisogna trovarsi per poter accedere a un dato file e le funzioni (ad esempio \textit{sola lettura}) che sono disponibili quando ci troviamo in un dato stato.
 
 Ultimo aspetto da considerare sono i meccanismi di sicurezza per l'autenticazione. Prima di tutto troviamo l'autenticazione tramite password o tramite key, per la prima la card compara dati inviati dall'esterno con dati segreti presenti al suo interno, mentre per la seconda viene richiesto a chi vuole accedere alla card di mostrare le conoscenza di una chiave privata.
 

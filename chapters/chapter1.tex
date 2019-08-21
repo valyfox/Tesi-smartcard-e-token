@@ -14,32 +14,43 @@ Gli utilizzi delle smart card sono molteplici, dal settore bancario, a quello de
 %------------------------------
 \subsection{Caratteristiche  delle smart card}
 
-Ci sono due criteri che permettono di classificare le smart card. Basandoci sulle potenzialità del circuito possiamo definire le smartcard a sola memoria o a microprocessore. Invece il tipo di interfaccia di collegamento ci permettono di distinguere smartcard a contatto, senza contatto e con antenna e contattiera (ovvero a doppia interfaccia).
+Ci sono due criteri che permettono di classificare le smart card. Basandoci sulle potenzialità del circuito possiamo definire le smart card a sola memoria o a microprocessore. Invece il tipo di interfaccia di collegamento ci permette di distinguere tra smart card a contatto, senza contatto e con antenna e contattiera (ovvero a doppia interfaccia).
 
-Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre le card a microprocessore possono effettuare elaborazioni. Infine le smarcard a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni. Mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
+Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre quelle a microprocessore possono effettuare elaborazioni. Infine le smart card a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni. Mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
 
 Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (ISO 14443 e ISO 15693). Lo standard ISO 7816 sarà trattato più nel dettaglio nel paragrafo \ref{standard}.
 
-Le smart card a microprocessore sono particolarmente utilizzate per conservare in maniera sicura una chiave privata. Grazie alla loro capacità di elaborazione sono in grado di ricevere una piccola quantità di dati (come ad esempio un hash di un documento) e restituirlo crittografato con la chiave privata contenuta al loro intero. In questo modo la chiave non "esce" mai dal microprocessore, e quindi non può essere letta in alcun modo. Grazie a questa caratteristica le smart card costituiscono un elemento sicuro per la firma digitale di documenti.
+Le smart card a microprocessore sono particolarmente utilizzate per conservare in maniera sicura una chiave privata. Grazie alla loro capacità di elaborazione sono in grado di ricevere una piccola quantità di dati (come ad esempio un hash di un documento) e restituirlo crittografato con la chiave privata contenuta al loro interno. In questo modo la chiave non ``esce" mai dal microprocessore, e quindi non può essere letta in alcun modo. Grazie a questa caratteristica le smart card costituiscono un elemento sicuro per la firma digitale di documenti.
 \cite{wiki_sc}
+
+%-----------SECTION------------
+\section{Breve storia delle smart card}
+Come accennato nel paragrafo \ref{intro}, l'idea di installare un chip elettronico su una scheda in plastica è venuta a due inventori tedeschi (Jürgen Dethloff e Helmut Grötrupp) nel 1968. Due anni dopo (nel 1970) è stato registrato il primo brevetto di smart card e nel 1976 si sono avute le prime card con microprocessore e memoria. Successivamente, nel 1079, l'azienda Motorola ha sviluppato la prima carta con chip sicuro per il settore bancario.
+
+I primi test a larga scala delle smart card sono iniziati in Francia con i primi sportelli automatici. Mentre negli stati uniti le smart card sono state inizialmente distribuiti ai lavoratori del settore agricolo. Ogni agricoltore ha ricevuto una card per la vendita delle arachidi. Una volta portato il raccolto presso un punto vendita autorizzato, i computer calcolavano la quantità del raccolto e la registravano sulle apposite card dei lavoratori.
+
+Intanto in Europa al prima distribuzione in scala delle smart card è avvenuta dai francesi con le card per le cabine telefoniche. La società Schlumberger è stata tra le prime ad implementare una struttura a chiave di cifratura pubblica per la gestione digitale dei certificati. Inoltre nel 1992 la Francia è stata la prima a realizzare delle card che richiedevano un PIN per essere utilizzate, introducendo le così dette  \textit{Carte Bleue} che si trattavano di carte di credito.
+
+Un anno dopo, nel 1993, è nato il cosiddetto standard EMV (Europay MasterCard Visa) per l'utilizzo dei POS quando le varie compagnie hanno deciso di definire uno standard per le carte di credito in Europa. In America MasterCard ha iniziato ad accettare questo standard solo nel 2014.
+\cite{history}
 
 %-----------------SECTION-----------------
 \section{Principali utilizzi delle smart card}
-Oggigiorno le smart card sono vastamente utilizzate in una serie di ambiti e applicazioni differenti. In questa sezione sono elencati i principali utilizzi che vengono fatti al giorno d'oggi.
+Oggigiorno le smart card sono vastamente utilizzate in una serie di ambiti e applicazioni differenti. In questa sezione sono elencati i principali utilizzi che vengono fatti attualmente.
 %------------------------------
 \subsection{Le smart card nella firma digitale}
 Come accennato nel paragrafo precedente, uno degli utilizzi delle smart card più frequente è quello nell'ambito della firma digitale.
 
-La firma digitale è un insieme di metodi crittografici che servono a garantire l'autenticità di un messaggio trasmesso su canali non sicuri. Offrendo al destinatario tre garanzie:
+La firma digitale è un insieme di metodi crittografici che servono a garantire l'autenticità di un messaggio trasmesso su canali non sicuri, offrendo al destinatario tre garanzie:
 \begin{itemize}
     \item L'autenticazione del mittente.
-    \item La non negazione di invio del messaggio da parte dell'utente.
+    \item Il non ripudio di invio del messaggio da parte dell'utente.
     \item L'integrità del messaggio inviato.
 \end{itemize}
 
-La firma digitale si basa su un sistema di cifratura asimmetrica (ovvero che utilizza due chiavi, una pubblica e una privata). La chiave privata è utilizzata per "firmare" il file, mentre quella pubblica, disponibile a chiunque, per la verifica della validità della firma.
+La firma digitale si basa su un sistema di cifratura asimmetrica (ovvero che utilizza due chiavi, una pubblica e una privata). La chiave privata è utilizzata per ``firmare'' il file, mentre quella pubblica, disponibile a chiunque, per la verifica della validità della firma.
 
-Il classico funzionamento di una firma digitale consiste in pochi semplici step.
+Il classico funzionamento di una firma digitale consiste in pochi semplici step:
 \begin{enumerate}
     \item Tramite una funzione di hash viene generata una stringa identificativa univoca al file. File uguali generano la stessa stringa (se viene usata la stessa funzione di hash) ed ogni stringa identifica univocamente un file.
     \item La stringa generata con la funzione di hash viene crittografata usando la chiave privata. Una volta cifrata, la firma viene allegata al documento, che risulta firmato.
@@ -126,13 +137,13 @@ Il modo più semplice per realizzare applicazioni che girano su smart card (più
 \subsection{Le smart card nel settore bancario}
 Un altro ambito nel quale le smart card sono ampiamente utilizzate è quello del settore bancario nel quale sono utilizzate per la realizzazione di carte di credito.
 
-Le carte di credito sono dispositivi molto utilizzati per l'elaborazione di pagamenti e/o il trasferimento di denaro. E si tratta di dispositivi in grado di identificare l'utente utilizzatore e la banca emittente.
+Le carte di credito sono dispositivi molto utilizzati per l'elaborazione di pagamenti e/o il trasferimento di denaro in quanto in grado di identificare l'utente utilizzatore e la banca emittente.
 
-Inizialmente le carte di credito utilizzavano una banda magnetica per memorizzare il codice identificativo, tuttavia, per far fronte a esigenze sempre più stringenti sulla sicurezza e l'affidabilità di questi dispositivi, si è scelto di utilizzare un chip integrato rendendole, a tutti gli effetti, delle smart card. Inoltre un chip, oltre a conservare le informazioni della card in modo più sicuro, ha una memoria molto più ampia di quella che poteva avere una banda magnetica. Grazie a ciò, le card a micro chip possono offrire maggiori funzionalità delle card a banda magnetica, venendo chiamate card "multi-applicazione".
+Inizialmente le carte di credito utilizzavano una banda magnetica per memorizzare il codice identificativo, tuttavia, per far fronte a esigenze sempre più stringenti sulla sicurezza e l'affidabilità di questi dispositivi, si è scelto di utilizzare un chip integrato rendendole, a tutti gli effetti, delle smart card. Inoltre un chip, oltre a conservare le informazioni della card in modo più sicuro, ha una memoria molto più ampia di quella che poteva avere una banda magnetica. Grazie a ciò, le card a micro chip possono offrire maggiori funzionalità delle card a banda magnetica, infatti vengono chiamate card "multi-applicazione".
 
 Le dimensioni di una carta di credito, sono definite dallo standard ISO/IEC 7810 ID01 e valgono 85,60 x 53,98 mm con uno spessore di 0,76 mm.
 
-Alle carte di credito è sempre associato un codice PIN che viene inserito ogni volta si vuole effettuare un pagamento.
+Alle carte di credito è sempre associato un codice PIN che viene inserito ogni volta si voglia effettuare un pagamento.
 
 Le carte di credito vengono principalmente utilizzate per effettuare pagamenti o prelevare denaro. Una transazione effettuata con carta di credito è un processo di autorizzazione tra tre enti:
 \begin{itemize}
@@ -149,7 +160,7 @@ Quindi la transazione avviene attraverso tre attori:
 
 Tra le principali tipologie di carte di credito la più comune è sicuramente la \textit{Carta di credito "a saldo"}, fornita dalle banche a seguito dell'apertura di un conto corrente. Questa card da la possibilità di pagare tutte le spese effettuate in un mese solare in un'unica soluzione il mese successivo.
 
-Un'altra tipologia di carta molto comune, sempre emessa dalle banche è la cosiddetta \textit{Carta di credito rateale o rotativo} che permette di rateizzare i pagamenti della merce aquistata.
+Un'altra tipologia di carta molto comune, sempre emessa dalle banche è la cosiddetta \textit{Carta di credito rateale o rotativo} che permette di rateizzare i pagamenti della merce acquistata.
 
 Le principali carte di credito sono:
 \begin{itemize}
@@ -171,7 +182,7 @@ Inoltre la prima cifra del codice della card serve per identificare il circuito 
     \item Discover Card: 6
 \end{itemize}
 
-L'unico rischio a cui si può incorrere quando si ha una carta di credito consiste nella possibilità di smarrimento e/o clonazione dei codici usati per l'autenticazione e l'autorizzazione del pagamento. In caso di furto ho smarrimento è sempre possibile bloccare la carta effettuando la richiesta presso il proprio fornitore.
+L'unico rischio a cui si può incorrere quando si ha una carta di credito consiste nella possibilità di smarrimento e/o clonazione dei codici usati per l'autenticazione e l'autorizzazione del pagamento. In caso di furto o smarrimento è sempre possibile bloccare la carta effettuando la richiesta presso il proprio fornitore.
 \cite{Wiki_cc}
 
 %------------------------------
@@ -203,7 +214,7 @@ I dati contentuti all'interno del chip sono i seguenti:
 
 L'accesso ai dati presenti sul microprocessore è effettuato attraverso la tecnologia NFC  (Near Field Communication), ciò permette alla carta di essere letta non solo da appositi lettori, ma anche dai più moderni smartphone dotati di lettori NFC.
 
-L'applicazione tramite la quale viene effettuata la verifica del documento è la stessa presente anche nei passaporti moderni, denominata "ICAO MRTD". L'applicazione contiene tutti i dati anagrafici dell'utente che sono firmati digitalmente dal Ministero dell’Interno prima che la carta venga prodotta presso l’Istituto Poligrafico e Zecca dello Stato.
+L'applicazione tramite la quale viene effettuata la verifica del documento è la stessa presente anche nei passaporti moderni, denominata ``ICAO MRTD" (International Civil Aviation Organization - Machine Readable Travel Documents). L'applicazione contiene tutti i dati anagrafici dell'utente che sono firmati digitalmente dal Ministero dell’Interno prima che la carta venga prodotta presso l’Istituto Poligrafico e Zecca dello Stato.
 
 La sicurezza dei dati è garantita dal fatto che la loro lettura è consentita solo a chi può leggere le informazioni stampate fisicamente sulla carta. Questo perchè sulla card è presente una chiave di accesso richiesta per la lettura elettronica (nel CAN – Card Access Number o nell’ MRZ – Machine Readable Zone). Invece, per l'accesso ai dati più sensibili, come le impronte digitali sono richieste ulteriori autorizzazioni date a specifici organi come le forze di Polizia. Questo, insieme al fatto che la conversazione tra lettore e carta è cifrata, fa sì che le informazioni non possono essere lette all'insaputa dell'utente e blocca anche tentativi di intercettazione della comunicazione.
 \cite{cie}
@@ -237,21 +248,3 @@ Una volta terminata l'operazione è possibile vedere i dati che possono essere l
   \caption{I dati letti elettronicamente dalla carta.}
   \label{fig:carta_letta}
 \end{figure}
-
-%-----------SECTION------------
-\section{Breve storia delle smart card}
-Come accennato nel paragrafo \ref{intro}, l'idea di installare un chip elettronico su una scheda in plastica è venuta a due inventori tedeschi (Jürgen Dethloff e Helmut Grötrupp) nel 1968. Due anni dopo (nel 1970) è stato registrato il primo brevetto di smart card e nel 1976 si sono avute le prime card con microprocessore e memoria. Successivamente, nel 1079, l'azienda Motorola ha sviluppato la prima carta con chip sicuro per il settore bancario.
-
-I primi test a larga scala delle smart card sono iniziati in Francia con i primi sportelli automatici. Mentre negli stati uniti le smart card sono state inizialmente distribuiti ai lavoratori del settore agricolo. Ogni agricoltore ha ricevuto una card per la vendita delle arachidi. Una volta portato il raccolto presso un punto vendita autorizzato, i computer calcolavano la quantità del raccolto e la registravano sulle apposite card dei lavoratori.
-
-Intanto in Europa al prima distribuzione in scala delle smart card è avvenuta dai francesi con le card per le cabine telefoniche. La società Schlumberger è stata tra le prime ad implementare una struttura a chiave di cifratura pubblica per la gestione digitale dei certificati. Inoltre nel 1992 la Francia è stata la prima a realizzare delle card che richiedevano un PIN per essere utilizzate, introducendo le così dette  \textit{Carte Bleue} che si trattavano di carte di credito.
-
-Un anno dopo, nel 1993, è nato il cosiddetto standard EMV (Europay MasterCard Visa) per l'utilizzo dei POS quando le varie compagnie hanno deciso di definire uno standard per le carte di credito in Europa. In America MasterCard ha iniziato ad accettare questo standard solo nel 2014.
-\cite{history}
-
-% \subsection{Sottosezione}
-%    \begin{equation}
-%    	x_n = c \, x_n(1 - x_n)
-%    	\label{Ec:logis}
-%    \end{equation}
-    
