@@ -4,7 +4,7 @@
 \section{Introduzione}
 Un token crittografico è un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori). Esso si presenta sotto forma di dispositivo elettronico molto piccolo e facile da trasportare dotato di batterie.
 
-Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo setto algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
+Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo stesso algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
 
 I numeri generati, insieme a un codice PIN fornito all'utente generano una password temporanea di sessione, valida cioè per un periodo limitato. L'autenticazione viene detta a due fattori perchè richiede sia la conoscenza del PIN che il possesso del token (univoco).
 
@@ -12,13 +12,14 @@ Il token rende un accesso molto più sicuro in quanto la password generata è va
 \cite{wiki_token}
 
 \section{Trusted Platform Module}
+\label{trusted_platform_module}
 Un Trusted Platform Module (o TPM) è un microchip elettronico utilizzato per la sicurezza informatica e implementato nelle schede madri o in altri dispositivi elettronici. Questi chip sono dotati di una coppia di chiavi e un modulo che implementa la crittografia asimmetrica (RSA) dei dati. Essendo le chiavi diverse per ogni dispositivo, esse permettono di identificarlo univocamente.
 
 \subsection{Specifiche del TPM}
 Le specifiche di questo tipo di dispositivi sono state pubblicate dal \textit{Trusted Computing Group}. Le funzionalità che questo dispositivo deve poter offrire sono:
 \begin{itemize}
     \item La generazione di numero pseudo-casuali.
-    \item La generazione e memorizzazioni di chiavi crittografiche asimmetriche.
+    \item La generazione e memorizzazione di chiavi crittografiche asimmetriche.
     \item La cifratura e de-cifratura di dati mediante l'algoritmo RSA.
     \item La generazione e verifica di hash SHA1
 \end{itemize}
@@ -45,7 +46,7 @@ Quando viene prodotto il TPM il generatore viene inizializzato con dati casuali 
 Tale componente viene utilizzato per la firma digitale dei file e deve poter gestire hash SHA-1 da 160 bit.
 
 \subsubsection{Gestore di alimentazione}
-Questo dispositivo non solo deve alimentare il TPM, ma deve anche informare i suoi dispositivi interi dello stato dell'alimentazione. Ciò per evitare che possano essere collegati altri dispositivi (operatori esterni) non autorizzati al chip.
+Questo dispositivo non solo deve alimentare il TPM, ma deve anche informare i suoi dispositivi interni dello stato dell'alimentazione. Ciò per evitare che possano essere collegati altri dispositivi (operatori esterni) non autorizzati al chip.
 
 \subsubsection{Opt-In}
 Questo componente ha il compito di gestire l'accensione, spegnimento, attivazione e disattivazione del TPM non ché la presenza di operatori esterni collegati al dispositivo. L'Opt-In deve garantire che le operazioni di accensione/spegnimento e attivazione/disattivazione del TPM sono effettuate da utenti abilitati al controllo del TPM (\textit{TPM-Owner}).
@@ -61,13 +62,13 @@ Il TPM, per essere utilizzato, richiede un software particolare, ovvero uno spec
 
 Utilizzando il software giusto il TPM è in grado di attestare da remoto l'identità della macchina su cui è montato e di cifrare e decifrare i dati che viaggiano da e verso la memoria di massa (quest'ultimo processo è denominato \textit{data sealing} e \textit{data binding}).
 
-Il processo di data sealing consiste nella cifratura dei dati che vengono salvati sulla memoria di massa del PC tramite l'utilizzo di una chiave che dipende dallo stato del computer (ovvero dall'hardware e il software utilizzato in quel momento). Ne consegue che la de-cifratura dei dati può essere fatta solo calcolando la medesima chiave e quindi avendo un PC il cui hardware e software in esecuzione corrisponde a ciò che è stato utilizzato per cifrare i dati.
+Il processo di data sealing consiste nella cifratura dei dati che vengono salvati sulla memoria di massa del PC tramite l'utilizzo di una chiave che dipende dallo stato del computer (ovvero dall'hardware e il software utilizzato in quel momento). Ne consegue che la de-cifratura dei dati può essere fatta solo calcolando la medesima chiave e quindi avendo un PC il cui hardware e software in esecuzione corrisponda a ciò che è stato utilizzato per cifrare i dati.
 
 Il binding dei dati, invece, consiste nella cifratura delle informazioni usando una chiave RSA detta \textit{Endorsment Key} che identifica univocamente il TMP, garantendo, quindi, che i dati possono essere decifrati solamente dal chip utilizzato per cifrarli.
 
 L'attestazione della macchina viene fatta con apposite chiavi dette \textit{Attestation Identity Key} (AIK) generate dal TPM. Tuttavia dalla versione 1.2 è possibile anche utilizzare un protocollo che preserva la riservatezza dei dati del sistema operativo, denominato \textit{Direct Anonymous Attestation}. In sostanta il chip ha particolari registri detti \textit{Platform Configuration Register} (PCR) che utilizza per salvare un hash dell'evoluzione dello stato del sistema effettuando un controllo sull'hardware e software installato e misurandolo secondo la formula \ref{Eq:pcr}.
     \begin{equation}
-   	PCR[i]_{t1} = SHA1(PCR[i]_{t0} + informazioni\; prelevate_{t1})
+   	PCR[i]_{t1} = SHA1(PCR[i]_{t0} + informazioni\_prelevate_{t1})
     	\label{Eq:pcr}
     \end{equation}
     

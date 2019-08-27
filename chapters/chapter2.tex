@@ -55,13 +55,13 @@ L'accesso ai file è, naturalmente, protetto. Lo standard fa riferimento a uno s
 
 Vengono considerate quattro tipologie di stato di sicurezza:
 \begin{itemize}
-    \item \textbf{Stato di sicurezza globale}, è solitamente legato a una procedura di autenticazione risiedente nel MF e quindi serve per proteggere l'itera struttura del file system.
-    \item \textbf{Stato di sicurezza specifico per un'applicazione}, può essere modificato al seguito del completamento di una procedura di autenticazione basata su un'applicazione può essere mantenuto, perso o recuperato quando durante la procedura di selezione di un'applicazione. Questo stato è rilevante solo per l'applicazione alla quale fa riferimento.
+    \item \textbf{Stato di sicurezza globale}, è solitamente legato a una procedura di autenticazione risiedente nel MF e quindi serve per proteggere l'intera struttura del file system.
+    \item \textbf{Stato di sicurezza specifico per un'applicazione}, può essere modificato al seguito del completamento di una procedura di autenticazione basata su un'applicazione, può essere mantenuto, perso o recuperato quando durante la procedura di selezione di un'applicazione. Questo stato è rilevante solo per l'applicazione alla quale fa riferimento.
     \item \textbf{Stato di sicurezza specifico per un file}, il funzionamento è simile allo stato relativo a un'applicazione, tuttavia lo stato si basa su un DF specifico e può essere mantenuto, perso o recuperato quando viene selezionato un file. Uno stato di sicurezza globale può essere visto come un caso particolare.
     \item \textbf{Stato di sicurezza relativo a un comando}, quest'ultimo stato esiste solo quando viene processato un comando usando una comunicazione sicura che richiede un'autenticazione.
 \end{itemize}
 
-Una volta stabilito lo stato in cui si trova chi sta comunicando con la carta, è possibile definire gli attributi di sicurezza, questi definiscono le azioni permesse e le condizioni che devono essere verificate per poterle effettuare. Questi attributi differiscono tra DF e EF e si basano su parametri opzionali presenti in un dato file o nel suo ``padre". In particolare questi attributi specificano in quale stato bisogna trovarsi per poter accedere a un dato file e le funzioni (ad esempio \textit{sola lettura}) che sono disponibili quando ci troviamo in un dato stato.
+Una volta stabilito lo stato in cui si trova chi sta comunicando con la carta, è possibile definire gli attributi di sicurezza, questi definiscono le azioni permesse e le condizioni che devono essere verificate per poterle effettuare, inoltre differiscono tra DF e EF e si basano su parametri opzionali presenti in un dato file o nel suo ``padre". In particolare questi attributi specificano in quale stato bisogna trovarsi per poter accedere a un dato file e le funzioni (ad esempio \textit{sola lettura}) che sono disponibili quando ci troviamo in un dato stato.
 
 Ultimo aspetto da considerare sono i meccanismi di sicurezza per l'autenticazione. Prima di tutto troviamo l'autenticazione tramite password o tramite key, per la prima la card compara dati inviati dall'esterno con dati segreti presenti al suo interno, mentre per la seconda viene richiesto a chi vuole accedere alla card di mostrare le conoscenza di una chiave privata.
 
@@ -90,7 +90,6 @@ Lo sviluppo delgi applet può essere effettuato tramite l'ide Eclipse installand
 I passaggi per lo sviluppo di un applet sono i seguenti:
 \begin{itemize}
     \item Installare e impostare l'ambiente di sviluppo usando l'IDE Eclipse e il Plug-in
-    \item Prendere familiarità con gli esempi.
     \item Sviluppare l'applet.
     \item Fare il debugging dell'applet.
     \item Creare il file CAP che può essere scaricato sul simulatore o su una card compatibile. Il file viene inviato tramite APDU. Il kit offre un convertitore utilizzabile per generare file CAP da inviare alla scheda (vedere il paragrafo \ref{cap}).
@@ -158,9 +157,9 @@ Per avviare il tool è possibile usare il comando
 
 Le opzioni disponibili sono:
 \begin{itemize}
-    \item \textbf{-help} che stampa un messaggio di aiuto
-    \item \textbf{-nobanner} che sopprime i vari messaggi
-    \item \textbf{-o \textit{nome\_del\_file}}.
+    \item \textbf{-help} stampa un messaggio di aiuto.
+    \item \textbf{-nobanner} sopprime i vari messaggi.
+    \item \textbf{-o \textit{nome\_del\_file}} permette di specificare un file di output.
 \end{itemize}
  
 \subsection{Fare il debugging delle applicazioni}
@@ -174,7 +173,7 @@ Il secondo tool offerto è il \textit{debugproxy}, esso ha il compito di tradurr
 
 Dato che i tool \textit{cref}, \textit{debugproxy} e l'IDE comunicano tramite socket, essi possono girare su host diversi.
 
-Da Eclipse è possibile far partire il debug proxy per impostare breakpoints, leggere o ipostare variabili e fare il debug di una libreria.
+Da Eclipse è possibile far partire il debug proxy per impostare breakpoints, leggere o impostare variabili e fare il debug di una libreria.
 
 \subsection{Distribuire le proprie applicazioni}
 Il kit permette di scaricare un Java Card technology package, effettuare il collegamento con la card, eliminare applets e pacchetti dalla smart card e impostare le applet di default per i vari canali logici.
@@ -196,9 +195,11 @@ dove
     \item $<$LE$>$ è la lunghezza che ci si aspetta per l'output (1 in modalità non estesa, 2 in modalità estesa).
 \end{itemize}
 
-Il protocollo utilizzato per installare un applet è composto da una sequenza di comandi ben precisa. Per prima cosa viene inviato un comando di selezione utilizzato per invocare l'on-card installer, segue un comando di CAP Begin. Successivamente viene ripetuta una seria di 3 comandi per ogni componente presente nel file CAP (Component \#\# Begin, Component \#\# Data, Component \#\# End). La sequenza viene conclusa dai comandi CAP End e Create Applet. Ogni comando viene inviato alla card e riceve una risposta che varia a seconda del comando.
+Il protocollo utilizzato per installare un applet è composto da una sequenza di comandi ben precisa. Per prima cosa viene inviato un comando di selezione utilizzato per invocare l'on-card installer, segue un comando di CAP Begin. Successivamente viene ripetuta una serie di 3 comandi per ogni componente presente nel file CAP (Component \#\# Begin, Component \#\# Data, Component \#\# End). La sequenza viene conclusa dai comandi CAP End e Create Applet. Ogni comando viene inviato alla card e riceve una risposta che varia a seconda del comando.
 
-\section{Smart Cart Web Server}
+%----------------------------------------
+\section{Smart Card Web Server}
+\label{smart_card_web_server}
 Uno \textit{Smart Card Web Server} (SCWS) è un server HTTP implementato all'interno di una smart card, di solito integrata in uno smartphone (SIM - vedi paragrafo \ref{applet_sim}). Questa tecnologia permette agli operatori di telefonia mobile di offrire determinati servizi utilizzando il diffusissimo protocollo \textit{HTTP/1.1}.
 
 Il principale obiettivo di questa tecnologia è quello di creare una comunicazione interna al dispositivo tra un WEB browser che gira nello smartphone e un server presente sulla card. Permette, inolte, un'amministrazione remota della smart card da un'entità autorizzata (ad esempio il fornitore del servizio di telefonia e/o della card stessa).
@@ -213,7 +214,7 @@ L'URL utilizzato per la comunicazione deve corrispondere alla definizione data d
     http\_URL = "http:" "//" host [ ":" port ] [ abs\_path [ "?" query ]]
 \end{center}
 
-La $<query>$ opzionale deve essere una sequuenza di uno o più termini della forma $<name>=<value>$ separati da un '\&'. Il server deve poter rispondere per lo meno a url di 1024 caratteri e \textit{abs\_path} di 128 caratteri.
+La $<query>$ opzionale deve essere una sequuenza di uno o più termini della forma $<name>=<value>$ separati da un '\&'. Il server deve poter rispondere perlomeno a url di 1024 caratteri e \textit{abs\_path} di 128 caratteri.
 
 \subsection{I protocolli di trasporto}
 Se la card non ha il proprio indirizzo IP e quindi non supporta il protocollo TCP/IP viene utilizzato il protocollo \textit{ Bearer Independent protocol} (BIT). In particolare, nel client viene fatto girare un gateway BIT che effettua una "traduzione" tra i due protocolli (TCP/IP e BIT). Il protocollo BIT è utilizzato per comunicare tra il gateway e la scheda.
