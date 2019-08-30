@@ -1,8 +1,8 @@
-\chapter{Token crittografici}
+\chapter{Secure Access Module}
 \label{chapter3}
 
 \section{Introduzione}
-Un token crittografico è un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori). Esso si presenta sotto forma di dispositivo elettronico molto piccolo e facile da trasportare dotato di batterie.
+Le Smart Card sono un esempio di token crittografico, ovvero di un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori).
 
 Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo stesso algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
 
@@ -11,9 +11,37 @@ I numeri generati, insieme a un codice PIN fornito all'utente generano una passw
 Il token rende un accesso molto più sicuro in quanto la password generata è valida per un periodo di tempo limitato, quindi un eventuale malintenzionato che volesse tentare di indovinare la password ha un tempo molto limitato per trovarla ed utilizzarla.
 \cite{wiki_token}
 
+Sebbene le smart card sono tra i token crittografici più diffusi al giorno dopo, le stesse funzionalità sono implementate da circuiti integrati saldati sulle schede di dispositivi più ampi dai quali sono utilizzati. Questi circuiti sono noti come dispositivi SAM (\textit{Secure Access Module}) e possono essere trovati in apparecchiature come i POS o i bancomat.
+
+I SAM spesso vengono utilizzati come posti sicuri per conservare chiavi di crittografia in modo tale che non debbano più uscire dal dispositivo, impedendo che utenti malintenzionati possano accedervi. Tuttavia possono anche essere utilizzati come proxy per ottenere una comunicazione più sicura con una smart card.
+
+Quando un'applicazione deve accedere alla smart card per comunicare può utilizzare il SAM come tramite per fare in modo che i dati che vengono scambiati con la card siano criptati come mostrato in figura \ref{fig:proxy_sam}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=410pt]{pictures/proxy_sam.png}
+  \caption{Schema della comunicazione utilizzando un SAM.}
+  \label{fig:proxy_sam}
+\end{figure}
+
+In alternativa le SAM posso essere utilizzate per generare o calcolare chiavi di sessione o crittografare piccoli hash, similmente a una smart card, che può essere considerata un tipo particolare di SAM.
+
+\section{Point of sale}
+Il POS (\textit{Point of sale}) è un dispositivo elettronico utilizzato dai commercianti per dare la possibilità ai loro clienti di acquistare merci e/o servizi tramite l'utilizzo di moneta virtuale (carte di credito o bancomat).
+
+Il funzionamento di un POS è molto semplice, prima di tutto il terminale deve leggere la carta del cliente e verificarne la validità. Per la lettura vi sono varie tecnologie disponibili, dalla ormai inutilizzata banda magnetica, alla lettura della smart card a contatti presente sulla carta, alla più recente tecnologia contactless che prevede l'avvicinamento della carta al dispositivo senza effettivamente toccarlo. Quest'ultima opzione può essere anche sfruttata per pagare con il cellulare tramite i servizi offerti da Google e Apple.
+
+Una volta letta la carta, va autorizzata la transazione. Per farlo vi sono due possibili modi:
+\begin{itemize}
+    \item Tramite firma. Il POS stampa due scontrini, uno dei quali va lasciato al cliente come ricevuta, mentre l'altro va firmato dallo stesso. Se la firma presente sullo scontrino non è la stessa presente sulla carta, allora la transazione viene considerata fraudolenta.
+    \item Tramite PIN. Il cliente inserisce un PIN segreto associato alla carta. Ciò aumenta di molto la sicurezza della transazione.
+\end{itemize}
+
+\cite{pos}
+
 \section{Trusted Platform Module}
 \label{trusted_platform_module}
-Un Trusted Platform Module (o TPM) è un microchip elettronico utilizzato per la sicurezza informatica e implementato nelle schede madri o in altri dispositivi elettronici. Questi chip sono dotati di una coppia di chiavi e un modulo che implementa la crittografia asimmetrica (RSA) dei dati. Essendo le chiavi diverse per ogni dispositivo, esse permettono di identificarlo univocamente.
+Un Trusted Platform Module (o TPM) è un microchip elettronico utilizzato per la sicurezza informatica e implementato nelle schede madri o in altri dispositivi elettronici, può essere considerato un SAM in senso lato. Questi chip sono dotati di una coppia di chiavi e un modulo che implementa la crittografia asimmetrica (RSA) dei dati. Essendo le chiavi diverse per ogni dispositivo, esse permettono di identificarlo univocamente.
 
 \subsection{Specifiche del TPM}
 Le specifiche di questo tipo di dispositivi sono state pubblicate dal \textit{Trusted Computing Group}. Le funzionalità che questo dispositivo deve poter offrire sono:
