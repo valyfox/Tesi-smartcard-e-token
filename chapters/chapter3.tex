@@ -2,20 +2,17 @@
 \label{chapter3}
 
 \section{Introduzione}
-Le Smart Card sono un esempio di token crittografico, ovvero di un dispositivo hardware utilizzato per effettuare un'autenticazione (di solito a due fattori).
+Un SAM (\textit{Secure Access Module}) è un circuito integrato che offre funzionalità simili alle Smart Card. Sono usati principalmente per conservare chiavi crittografiche che vengono utilizzate dal dispositivo nel quale sono integrati.
 
-Il funzionamento del token è quello di generare codici numerici pseudocasuali periodicamente basandosi su algoritmi che prendono in considerazione il tempo dato da un orologio interno al dispositivo e dati come il codice di serie. Lo stesso algoritmo viene fatto girare su un server che è stato sincronizzato col token e che quindi produce gli stessi codici.
+Come per le Smart card, una volta salvata una chiave in un dispositivo SAM durante, ad esempio, la sua produzione, essa non uscirà più dal dispoditivo. Ciò garantisce che la chiave non possa essere letta, ma solo utilizzata (se si dispone dell'autorizzazione).
 
-I numeri generati, insieme a un codice PIN fornito all'utente generano una password temporanea di sessione, valida cioè per un periodo limitato. L'autenticazione viene detta a due fattori perchè richiede sia la conoscenza del PIN che il possesso del token (univoco).
+I SAM posseggono abbastanza potenza da poter effettuare operazioni non troppo complesse, come generare chiavi di sessione o crittografare una piccola mole di dati (tipicamente un hash).
 
-Il token rende un accesso molto più sicuro in quanto la password generata è valida per un periodo di tempo limitato, quindi un eventuale malintenzionato che volesse tentare di indovinare la password ha un tempo molto limitato per trovarla ed utilizzarla.
-\cite{wiki_token}
+La Smart card è un esempio particolare di SAM, tuttavia la differenza sostanziale è che, mentre una Smart card può essere inserita in lettori diversi, un circuito SAM è integrato in un dispositivo "più grande". In questo senso non è un dispositivo \textit{stand alone} (ovvero che sta "da solo") come una Smart card.
 
-Sebbene le smart card sono tra i token crittografici più diffusi al giorno dopo, le stesse funzionalità sono implementate da circuiti integrati saldati sulle schede di dispositivi più ampi dai quali sono utilizzati. Questi circuiti sono noti come dispositivi SAM (\textit{Secure Access Module}) e possono essere trovati in apparecchiature come i POS o i bancomat.
+I SAM, oltre ad essere utilizzati come posti sicuri per conservare chiavi di crittografia possono anche essere utilizzati come proxy per ottenere una comunicazione più sicura con una smart card.
 
-I SAM spesso vengono utilizzati come posti sicuri per conservare chiavi di crittografia in modo tale che non debbano più uscire dal dispositivo, impedendo che utenti malintenzionati possano accedervi. Tuttavia possono anche essere utilizzati come proxy per ottenere una comunicazione più sicura con una smart card.
-
-Quando un'applicazione deve accedere alla smart card per comunicare può utilizzare il SAM come tramite per fare in modo che i dati che vengono scambiati con la card siano criptati come mostrato in figura \ref{fig:proxy_sam}.
+Quando un'applicazione deve accedere alla smart card per comunicare può utilizzare il SAM come tramite per fare in modo che i dati che vengono scambiati con la card siano criptati, come mostrato in figura \ref{fig:proxy_sam}.
 
 \begin{figure}[h!]
   \centering
@@ -23,8 +20,6 @@ Quando un'applicazione deve accedere alla smart card per comunicare può utilizz
   \caption{Schema della comunicazione utilizzando un SAM.}
   \label{fig:proxy_sam}
 \end{figure}
-
-In alternativa le SAM posso essere utilizzate per generare o calcolare chiavi di sessione o crittografare piccoli hash, similmente a una smart card, che può essere considerata un tipo particolare di SAM.
 
 \section{Point of sale}
 Il POS (\textit{Point of sale}) è un dispositivo elettronico utilizzato dai commercianti per dare la possibilità ai loro clienti di acquistare merci e/o servizi tramite l'utilizzo di moneta virtuale (carte di credito o bancomat).
