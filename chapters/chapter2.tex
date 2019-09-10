@@ -36,10 +36,10 @@ Per comunicare con la carta va inviato un comando e attesa una risposta, come in
 
 All'header seguono una serie di byte per l'invio di eventuali dati alla card. Il primo byte indica il numero di byte che saranno inviati, questo è denominato come L\textsubscript{c}. Questo campo può non essere presente se non vengono inviati dati, oppure occupare fino a 3 byte. Ovviamente subito dopo si hanno gli N byte indicati dal campo L\textsubscript{c} usati per inviare i dati necessari alla carta. Infine il comando si chiude con un campo L\textsubscript{e} che indica il numero massimo di byte che ci si aspetta come risposta dalla carta. Anche questo campo può essere assente o occupare fino a 3 byte.
 
-La risposta è molto più semplice e contiene solo due campi: Il primo è un numero di byte al più uguale a quanto indicato dal campo L\textsubscript{e} che contiene gli eventuali dati inviati dalla risposta. Il secondo campo, è formato da due byte di stato denominati rispettivamente SW1 e SW2.
+La risposta è molto più semplice e contiene solo due campi: il primo è un numero di byte al più uguale a quanto indicato dal campo L\textsubscript{e} che contiene gli eventuali dati inviati dalla risposta. Il secondo campo è formato da due byte di stato denominati rispettivamente SW1 e SW2.
 
 \subsubsection{File system}
-Come specificato dallo standard ISO 7816-4 i file presenti sulla smart card si dividono principalmente in due categorie: i file dedicati (DF - dedicated files) e i file elementari (EF - elementary files). I primi sono i file delle applicazioni e delle strutture dati, mentre i secondi sono file che contengono dati. I DF possono essere imparentati tra di loro, mentre ciò non è possibile per gli EF. Gli EF sono a loro volta divisi in due categorie gli EF di lavoro e gli EF inteni. I primi sono utilizzati "dal mondo esterno" mentre i secondi sono dati interni utilizzati dalla carta.
+Come specificato dallo standard ISO 7816-4 i file presenti sulla smart card si dividono principalmente in due categorie: i file dedicati (DF - dedicated files) e i file elementari (EF - elementary files). I primi sono i file delle applicazioni e delle strutture dati, mentre i secondi sono file che contengono dati. I DF possono essere imparentati tra di loro, mentre ciò non è possibile per gli EF. Gli EF sono a loro volta divisi in due categorie gli EF di lavoro e gli EF inteni. I primi sono utilizzati ``dal mondo esterno" mentre i secondi sono dati interni utilizzati dalla carta.
 
 I file sono organizzati in una struttura albero il cui file DF che si trova alla radice viene chiamato master file (MF), come mostrato in figura \ref{fig:file_system}.
 
@@ -199,7 +199,7 @@ Il protocollo utilizzato per installare un applet è composto da una sequenza di
 
 %----------------------------------------
 \section{Funzionalità avanzate}
-La tecnologia della smart card si è evoluta nel tempo, grazie anche ai nuovi sviluppi tecnologici che hanno portato alla realizzazione di circuiti integrati sempre più piccoli e veloci. Ciò ha permesso lo sviluppo si smart card sempre più potenti capaci di far girare programmi sempre più complessi.
+La tecnologia della smart card si è evoluta nel tempo, grazie anche ai nuovi sviluppi tecnologici che hanno portato alla realizzazione di circuiti integrati sempre più piccoli e veloci. Ciò ha permesso lo sviluppo di smart card sempre più potenti capaci di far girare programmi sempre più complessi.
 
 \subsection{Smart Card Web Server}
 \label{smart_card_web_server}
@@ -214,10 +214,10 @@ Questo canale di comunicazione è utilizzato dai fornitori per offrire maggiori 
 L'URL utilizzato per la comunicazione deve corrispondere alla definizione data dal protocollo \textit{HTTP/1.1}, ovvero
 
 \begin{center}
-    http\_URL = "http:" "//" host [ ":" port ] [ abs\_path [ "?" query ]]
+    http\_URL = ``http:" ``//" host [ ``:" port ] [ abs\_path [ ``?" query ]]
 \end{center}
 
-La $<query>$ opzionale deve essere una sequuenza di uno o più termini della forma $<name>=<value>$ separati da un '\&'. Il server deve poter rispondere perlomeno a url di 1024 caratteri e \textit{abs\_path} di 128 caratteri.
+La $<query>$ opzionale deve essere una sequenza di uno o più termini della forma $<name>=<value>$ separati da un '\&'. Il server deve poter rispondere perlomeno a url di 1024 caratteri e \textit{abs\_path} di 128 caratteri.
 
 % \subsubsection{I protocolli di trasporto}
 % Se la card non ha il proprio indirizzo IP e quindi non supporta il protocollo TCP/IP viene utilizzato il protocollo \textit{ Bearer Independent protocol} (BIT). In particolare, nel client viene fatto girare un gateway BIT che effettua una "traduzione" tra i due protocolli (TCP/IP e BIT). Il protocollo BIT è utilizzato per comunicare tra il gateway e la scheda.
@@ -281,9 +281,9 @@ All'interno di una smart card con sistema operativo Java card è possibile insta
 
 Per questo motivo bisogna fare in modo che un applet non possa accedere ai dati delle altre applicazioni che convivono sulla scheda. Un applet firewall ha il compito di confinare ogni applet in una porzione della memoria e bloccare eventuali accessi ad aree designate alle altre applicazioni.
 
-Il firewall permette, comunque, un meccanismo di condivisione di alcune risorse in maniera controllata e sicura, questo meccanismo influisce sulla programmazione di un applet e va tenuto conto dagli sviluppatori.
+Il firewall permette, comunque, un meccanismo di condivisione di alcune risorse in maniera controllata e sicura; questo meccanismo influisce sulla programmazione di un applet e va tenuto conto dagli sviluppatori.
 
-Il meccanismo di firewall permette di evitare che errori della programmazione o del design di un applet possano portare alla "fuoriuscita" di dati sensibili. Inoltre il firewall perviene anche tentativi di hacking, in quanto se un'applicazione malevola viene installata su una smart card e riesce ad ottenere il riferimento pubblico di un oggetto che appartiene ad un'altra applicazione, nel momento in cui tenta di accederci il firewall la bloccherà. In questo modo non viene impedita la regolare esecuzione dell'applet "lecito".
+Il meccanismo di firewall permette di evitare che errori della programmazione o del design di un applet possano portare alla "fuoriuscita" di dati sensibili. Inoltre il firewall perviene anche tentativi di hacking, in quanto se un'applicazione malevola viene installata su una smart card e riesce ad ottenere il riferimento pubblico di un oggetto che appartiene ad un'altra applicazione, nel momento in cui tenta di accederci il firewall la bloccherà. In questo modo non viene impedita la regolare esecuzione dell'applet ``lecito".
 
 Il firewall divide i vari oggetti in \textit{contesti}, ovvero aree di memoria protette. Il bordo di ogni contesto è costituito dal firewall stesso. Quando un'applicazione viene eseguita, riceve un contesto (detto \textit{group context}). Se ci sono più istanze di applicazioni che fanno parte dello stesso package, allora hanno in assegnazione lo stesso contesto e possono condividere gli oggetti che vi appartengono.
 

@@ -16,7 +16,7 @@ Gli utilizzi delle smart card sono molteplici, dal settore bancario, a quello de
 
 Ci sono due criteri che permettono di classificare le smart card. Basandoci sulle potenzialità del circuito possiamo definire le smart card a sola memoria o a microprocessore. Invece il tipo di interfaccia di collegamento ci permette di distinguere tra smart card a contatto, senza contatto e con antenna e contattiera (ovvero a doppia interfaccia).
 
-Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre quelle a microprocessore possono effettuare elaborazioni. Infine le smart card a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni. Mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
+Le smart card a sola memoria hanno la capacità di memorizzare informazioni che possono essere lette successivamente, mentre quelle a microprocessore possono effettuare elaborazioni. Infine le smart card a contatto hanno dei pin connettori tramite i quali possono essere alimentate ed è possibile inviare e ricevere informazioni, mentre quelle senza contatto hanno a disposizione un'antenna che reagisce a un particolare campo elettromagnetico emesso da un dispositivo di lettura/scrittura.
 
 Le smart card rispondono allo standard ISO 7816 che definisce le caratteristiche che devono avere le card a contatto, mentre altri standard sono usati per le card senza contatto (ISO 14443 e ISO 15693). Lo standard ISO 7816 sarà trattato più nel dettaglio nel paragrafo \ref{standard}.
 
@@ -27,9 +27,9 @@ Le smart card a microprocessore sono particolarmente utilizzate per conservare i
 \section{Breve storia delle smart card}
 Come accennato nel paragrafo \ref{intro}, l'idea di installare un chip elettronico su una scheda in plastica è venuta a due inventori tedeschi (Jürgen Dethloff e Helmut Grötrupp) nel 1968. Due anni dopo (nel 1970) è stato registrato il primo brevetto di smart card e nel 1976 si sono avute le prime card con microprocessore e memoria. Successivamente, nel 1079, l'azienda Motorola ha sviluppato la prima carta con chip sicuro per il settore bancario.
 
-I primi test a larga scala delle smart card sono iniziati in Francia con i primi sportelli automatici. Mentre negli stati uniti le smart card sono state inizialmente distribuiti ai lavoratori del settore agricolo. Ogni agricoltore ha ricevuto una card per la vendita delle arachidi. Una volta portato il raccolto presso un punto vendita autorizzato, i computer calcolavano la quantità del raccolto e la registravano sulle apposite card dei lavoratori.
+I primi test a larga scala delle smart card sono iniziati in Francia con i primi sportelli automatici, mentre negli stati uniti le smart card sono state inizialmente distribuiti ai lavoratori del settore agricolo. Ogni agricoltore ha ricevuto una card per la vendita delle arachidi. Una volta portato il raccolto presso un punto vendita autorizzato, i computer calcolavano la quantità del raccolto e la registravano sulle apposite card dei lavoratori.
 
-Intanto in Europa al prima distribuzione in scala delle smart card è avvenuta dai francesi con le card per le cabine telefoniche. La società Schlumberger è stata tra le prime ad implementare una struttura a chiave di cifratura pubblica per la gestione digitale dei certificati. Inoltre nel 1992 la Francia è stata la prima a realizzare delle card che richiedevano un PIN per essere utilizzate, introducendo le così dette  \textit{Carte Bleue} che si trattavano di carte di credito.
+Intanto in Europa al prima distribuzione in scala delle smart card è avvenuta ad opera dei Francesi con le card per le cabine telefoniche. La società Schlumberger è stata tra le prime ad implementare una struttura a chiave di cifratura pubblica per la gestione digitale dei certificati. Inoltre nel 1992 la Francia è stata la prima a realizzare delle card che richiedevano un PIN per essere utilizzate, introducendo le così dette  \textit{Carte Bleue} che si trattavano di carte di credito.
 
 Un anno dopo, nel 1993, è nato il cosiddetto standard EMV (Europay MasterCard Visa) per l'utilizzo dei POS quando le varie compagnie hanno deciso di definire uno standard per le carte di credito in Europa. In America MasterCard ha iniziato ad accettare questo standard solo nel 2014.
 \cite{history}
@@ -60,7 +60,7 @@ Il classico funzionamento di una firma digitale consiste in pochi semplici step:
 
 La chiave pubblica è solitamente fornita da una Certification Autority (CA) che garantisce che si tratti effettivamente della chiave pubblica del mittente del messaggio.
 
-Il ruolo che la smart card gioca nella firma digitale consiste nel conservare la chiave privata in un luogo sicuro. Il codice è infatti salvato sulla memoria del chip presente sulla card, che poi viene reso inaccessibile dall'esterno. Una volta collegata la card a un calcolatore, tramite un apposito lettore, al momento della firma viene inviato alla card la stringa identificativa del file. La scheda provvederà poi a crittografare la stringa e a restituire il risultato dell'elaborazione al PC che provvederà infine ad allegare la vera e propria firma al documento.
+Il ruolo che la smart card gioca nella firma digitale consiste nel conservare la chiave privata in un luogo sicuro. Il codice è, infatti, salvato sulla memoria del chip presente sulla card, che poi viene reso inaccessibile dall'esterno. Una volta collegata la card a un calcolatore, tramite un apposito lettore, al momento della firma viene inviato alla card la stringa identificativa del file. La scheda provvederà poi a crittografare la stringa e a restituire il risultato dell'elaborazione al PC che provvederà infine ad allegare la vera e propria firma al documento.
 \cite{Wiki_fd}
 
 %------------------------------
@@ -102,7 +102,7 @@ Le caratteristiche tipiche di una smart card SIM sono riassunte nella tabella \r
 
 L'utilizzo che viene fatto delle sim dagli operatori è quello di fornire vari servizi ai loro clienti e controllarne l'utilizzo.
 
-La carta SIM non contiene in memoria il numero telefonico associato all'utente, ma solo il codice identificativo IMSI ed è compito dell'operatore associarlo ad un numero telefonico, grazie a ciò è possibile avere più SIM associate allo stesso numero o portare il proprio numero da un operatore a un altro.
+La carta SIM non contiene in memoria il numero telefonico associato all'utente, ma solo il codice identificativo IMSI ed è compito dell'operatore associarlo ad un numero telefonico; grazie a ciò è possibile avere più SIM associate allo stesso numero o portare il proprio numero da un operatore a un altro.
 
 La SIM è protetta da un codice PIN composto solitamente da 4 o 8 cifre, l'utente ha la facoltà di disabilitare la richiesta del codice ogni volta che la SIM viene alimentata oppure cambiare il codice fornito dall'operatore. Una volta che il codice PIN è stato sbagliato tre volte, la scheda si blocca e viene richiesto un codice di sblocco a 10 cifre, denominato PUK (PIN Unblocking Key) fornito dall'operatore. Se il codice PUK viene sbagliato 10 volte la scheda si blocca definitivamente e può essere sbloccata solo dall'operatore dopo aver provato di essere l'intestatario della SIM.
 
@@ -118,9 +118,9 @@ Le carte di credito sono dispositivi molto utilizzati per l'elaborazione di paga
 
 Inizialmente le carte di credito utilizzavano una banda magnetica per memorizzare il codice identificativo, tuttavia, per far fronte a esigenze sempre più stringenti sulla sicurezza e l'affidabilità di questi dispositivi, si è scelto di utilizzare un chip integrato rendendole, a tutti gli effetti, delle smart card. Inoltre un chip, oltre a conservare le informazioni della card in modo più sicuro, ha una memoria molto più ampia di quella che poteva avere una banda magnetica. Grazie a ciò, le card a micro chip possono offrire maggiori funzionalità delle card a banda magnetica, infatti vengono chiamate card "multi-applicazione".
 
-Le dimensioni di una carta di credito, sono definite dallo standard ISO/IEC 7810 ID01 e valgono 85,60 x 53,98 mm con uno spessore di 0,76 mm.
+Le dimensioni di una carta di credito sono definite dallo standard ISO/IEC 7810 ID01 e valgono 85,60 x 53,98 mm con uno spessore di 0,76 mm.
 
-Alle carte di credito è sempre associato un codice PIN che viene inserito ogni volta si voglia effettuare un pagamento.
+Alle carte di credito è sempre associato un codice PIN, che viene inserito ogni volta si voglia effettuare un pagamento.
 
 Le carte di credito vengono principalmente utilizzate per effettuare pagamenti o prelevare denaro. Una transazione effettuata con carta di credito è un processo di autorizzazione tra tre enti:
 \begin{itemize}
@@ -135,9 +135,9 @@ Quindi la transazione avviene attraverso tre attori:
     \item L'\textit{istituto} emittente che si impegna a pagare il fornitore il prezzo stabilito drante la transazione a meno di eventuali canoni concordati in fase di stipula del contratto con il fornitore.
 \end{enumerate}
 
-Tra le principali tipologie di carte di credito la più comune è sicuramente la \textit{Carta di credito "a saldo"}, fornita dalle banche a seguito dell'apertura di un conto corrente. Questa card da la possibilità di pagare tutte le spese effettuate in un mese solare in un'unica soluzione il mese successivo.
+Tra le principali tipologie di carte di credito la più comune è sicuramente la \textit{Carta di credito ``a saldo"}, fornita dalle banche a seguito dell'apertura di un conto corrente. Questa card da la possibilità di pagare tutte le spese effettuate in un mese solare in un'unica soluzione il mese successivo.
 
-Un'altra tipologia di carta molto comune, sempre emessa dalle banche è la cosiddetta \textit{Carta di credito rateale o rotativo} che permette di rateizzare i pagamenti della merce acquistata.
+Un'altra tipologia di carta molto comune, sempre emessa dalle banche, è la cosiddetta \textit{Carta di credito rateale o rotativo} che permette di rateizzare i pagamenti della merce acquistata.
 
 Le principali carte di credito sono:
 \begin{itemize}
@@ -150,7 +150,7 @@ Le principali carte di credito sono:
     \item China UnionPay
 \end{itemize}
 
-Inoltre la prima cifra del codice della card serve per identificare il circuito di appartenenza, e per questo è sempre la stessa per ogni carta appartenente al medesimo circuito.
+Inoltre la prima cifra del codice della card serve per identificare il circuito di appartenenza e per questo è sempre la stessa per ogni carta appartenente al medesimo circuito.
 \begin{itemize}
     \item Diners: 3
     \item American Express: 3
@@ -159,7 +159,7 @@ Inoltre la prima cifra del codice della card serve per identificare il circuito 
     \item Discover Card: 6
 \end{itemize}
 
-L'unico rischio a cui si può incorrere quando si ha una carta di credito consiste nella possibilità di smarrimento e/o clonazione dei codici usati per l'autenticazione e l'autorizzazione del pagamento. In caso di furto o smarrimento è sempre possibile bloccare la carta effettuando la richiesta presso il proprio fornitore.
+L'unico rischio in cui si può incorrere quando si ha una carta di credito consiste nella possibilità di smarrimento e/o clonazione dei codici usati per l'autenticazione e l'autorizzazione del pagamento. In caso di furto o smarrimento è sempre possibile bloccare la carta effettuando la richiesta presso il proprio fornitore.
 \cite{Wiki_cc}
 
 %------------------------------
@@ -194,7 +194,7 @@ L'accesso ai dati presenti sul microprocessore è effettuato attraverso la tecno
 
 L'applicazione tramite la quale viene effettuata la verifica del documento è la stessa presente anche nei passaporti moderni, denominata ``ICAO MRTD" (International Civil Aviation Organization - Machine Readable Travel Documents). L'applicazione contiene tutti i dati anagrafici dell'utente che sono firmati digitalmente dal Ministero dell’Interno prima che la carta venga prodotta presso l’Istituto Poligrafico e Zecca dello Stato.
 
-La sicurezza dei dati è garantita dal fatto che la loro lettura è consentita solo a chi può leggere le informazioni stampate fisicamente sulla carta. Questo perchè sulla card è presente una chiave di accesso richiesta per la lettura elettronica (nel CAN – Card Access Number o nell’ MRZ – Machine Readable Zone). Invece, per l'accesso ai dati più sensibili, come le impronte digitali sono richieste ulteriori autorizzazioni date a specifici organi come le forze di Polizia. Questo, insieme al fatto che la conversazione tra lettore e carta è cifrata, fa sì che le informazioni non possono essere lette all'insaputa dell'utente e blocca anche tentativi di intercettazione della comunicazione.
+La sicurezza dei dati è garantita dal fatto che la loro lettura è consentita solo a chi può leggere le informazioni stampate fisicamente sulla carta. Questo perchè sulla card è presente una chiave di accesso richiesta per la lettura elettronica (nel CAN – Card Access Number o nell’ MRZ – Machine Readable Zone). Invece, per l'accesso ai dati più sensibili, come le impronte digitali, sono richieste ulteriori autorizzazioni date a specifici organi come le forze di Polizia. Questo, insieme al fatto che la conversazione tra lettore e carta è cifrata, fa sì che le informazioni non possono essere lette all'insaputa dell'utente e blocca anche tentativi di intercettazione della comunicazione.
 \cite{cie}
 
 \subsubsection{Esempio di scansione di una carta d'identità}

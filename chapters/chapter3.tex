@@ -8,7 +8,7 @@ Come per le Smart card, una volta salvata una chiave in un dispositivo SAM duran
 
 I SAM posseggono abbastanza potenza da poter effettuare operazioni non troppo complesse, come generare chiavi di sessione o crittografare una piccola mole di dati (tipicamente un hash).
 
-La Smart card è un esempio particolare di SAM, tuttavia la differenza sostanziale è che, mentre una Smart card può essere inserita in lettori diversi, un circuito SAM è integrato in un dispositivo "più grande". In questo senso non è un dispositivo \textit{stand alone} (ovvero che sta ``da solo'') come una Smart card.
+La Smart card è un esempio particolare di SAM, tuttavia la differenza sostanziale è che, mentre una Smart card può essere inserita in lettori diversi, un circuito SAM è integrato in un dispositivo ``più grande". In questo senso non è un dispositivo \textit{stand alone} (ovvero che sta ``da solo'') come una Smart card.
 
 I SAM, oltre ad essere utilizzati come posti sicuri per conservare chiavi di crittografia possono anche essere utilizzati come proxy per ottenere una comunicazione più sicura con una smart card.
 
@@ -49,7 +49,7 @@ Le specifiche di questo tipo di dispositivi sono state pubblicate dal \textit{Tr
 Per realizzare queste funzionalità il chip deve avere una serie di componenti che comunicano utilizzando un bus interno e in grado di comunicare con il bus della scheda madre sulla quale il dispositivo è installato.
 
 \subsubsection{Dispositivo I/O}
-Come accennato il dispositivo I/O deve essere in grado di far passare le informazioni dal bus interno del chip a quello esterno e viceversa.
+Come accennato, il dispositivo I/O deve essere in grado di far passare le informazioni dal bus interno del chip a quello esterno e viceversa.
 
 \subsubsection{Coprocessore Crittografico}
 Il coprocessore crittografico deve essere in grado di garantire le funzionalità che sono state elencate in precedenza. Questo dispositivo può anche utilizzare la crittografia asimmetrica per scambiare dati internamente. Inoltre per la firma digitale si usano chiavi a 2048 byte anche se il modulo deve comunque supportare chiavi a 512 e 1024 byte.
@@ -87,9 +87,9 @@ Utilizzando il software giusto il TPM è in grado di attestare da remoto l'ident
 
 Il processo di data sealing consiste nella cifratura dei dati che vengono salvati sulla memoria di massa del PC tramite l'utilizzo di una chiave che dipende dallo stato del computer (ovvero dall'hardware e il software utilizzato in quel momento). Ne consegue che la de-cifratura dei dati può essere fatta solo calcolando la medesima chiave e quindi avendo un PC il cui hardware e software in esecuzione corrisponda a ciò che è stato utilizzato per cifrare i dati.
 
-Il binding dei dati, invece, consiste nella cifratura delle informazioni usando una chiave RSA detta \textit{Endorsment Key} che identifica univocamente il TMP, garantendo, quindi, che i dati possono essere decifrati solamente dal chip utilizzato per cifrarli.
+Il binding dei dati, invece, consiste nella cifratura delle informazioni usando una chiave RSA detta \textit{Endorsment Key} (chiave di approvazione) che identifica univocamente il TMP, garantendo, quindi, che i dati possono essere decifrati solamente dal chip utilizzato per cifrarli.
 
-L'attestazione della macchina viene fatta con apposite chiavi dette \textit{Attestation Identity Key} (AIK) generate dal TPM. Tuttavia dalla versione 1.2 è possibile anche utilizzare un protocollo che preserva la riservatezza dei dati del sistema operativo, denominato \textit{Direct Anonymous Attestation}. In sostanta il chip ha particolari registri detti \textit{Platform Configuration Register} (PCR) che utilizza per salvare un hash dell'evoluzione dello stato del sistema effettuando un controllo sull'hardware e software installato e misurandolo secondo la formula \ref{Eq:pcr}.
+L'attestazione della macchina viene fatta con apposite chiavi dette \textit{Attestation Identity Key} (AIK) generate dal TPM. Tuttavia dalla versione 1.2 è possibile anche utilizzare un protocollo che preserva la riservatezza dei dati del sistema operativo, denominato \textit{Direct Anonymous Attestation}. In sostanta il chip ha particolari registri detti \textit{Platform Configuration Register} (PCR) che utilizza per salvare un hash dell'evoluzione dello stato del sistema, effettuando un controllo sull'hardware e software installato e misurandolo secondo la formula \ref{Eq:pcr}.
     \begin{equation}
    	PCR[i]_{t1} = SHA1(PCR[i]_{t0} + informazioni\_prelevate_{t1})
     	\label{Eq:pcr}
