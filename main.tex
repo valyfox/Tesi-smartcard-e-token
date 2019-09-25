@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{book}
+\documentclass[a4paper,12pt, oneside]{book}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[top=1in, left=1.25in, right=1.25in, bottom=1in]{geometry}
@@ -17,13 +17,22 @@
 
 \usepackage{pdfpages}
 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
 %Title, date an author of the document
 \title{Smart card e token crittografici}
 \author{Valerio Volpe}
 
 %Begining of the document
 \begin{document}
-\mainmatter
+\frontmatter
 
 \includepdf[pages={1}]{frontespizio}
 
@@ -37,10 +46,10 @@
 
 
 \tableofcontents
-%\listoftables
-%\listoffigures
+\thispagestyle{empty}
 
 \medskip
+\mainmatter
 
 \include{chapters/introduction}
 \include{chapters/chapter1}
